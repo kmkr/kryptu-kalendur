@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import ReactDOM from 'react-dom';
 
 import Leaderboard from './leaderboard';
+import Luke from './luke';
 import './app.less';
 
 const users = [
@@ -48,11 +49,62 @@ const scores = Object.keys(scoreObj).map(key => {
 });
 
 class App extends PureComponent {
+    constructor() {
+        super();
+        this.state = {
+            showLeaderboard: true,
+            showLukeNumber: -1
+        };
+    }
+
+    componentDidMount() {
+        setInterval(() => {
+            if (this.state.showLeaderboard) {
+                this.setState({
+                    showLeaderboard: false,
+                    showLukeNumber: 0
+                });
+            } else {
+                if (this.state.showLukeNumber === (calendar.length - 1)) {
+                    this.setState({
+                        showLeaderboard: true,
+                        showLukeNumber: -1
+                    });
+                } else {
+                    this.setState({
+                        showLeaderboard: false,
+                        showLukeNumber: this.state.showLukeNumber + 1
+                    });
+                }
+            }
+        }, 5000000)
+    }
+
+    getLukeData(num) {
+        const luke = calendar[num];
+        const winner = users.find(u => u.id === luke.winner).name;
+        let bonus;
+        if (luke.bonus) {
+            bonus = users.find(u => u.id === luke.bonus).name;
+        }
+
+        return {day: num + 1, winner, bonus}
+    }
+
+    renderHeader() {
+        const txt = 'Kryptu Kalendur';
+
+        return txt.split('').map((char, idx) => (
+            <span key={idx} className={`char char${idx}`}>{char}</span>
+        ));
+    }
+
     render() {
         return (
             <div>
-                <h1>Kryptu Kalendur</h1>
-                <Leaderboard scores={scores}/>
+                <h1>{this.renderHeader()}</h1>
+                {this.state.showLeaderboard && <Leaderboard scores={scores}/>}
+                {this.state.showLukeNumber > -1 && <Luke lukeData={this.getLukeData(this.state.showLukeNumber)}/>}
             </div>
         )
     }

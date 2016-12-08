@@ -8,7 +8,11 @@ export default class Leaderboard extends PureComponent {
                 <h2>Leaderboard</h2>
 
                 <ul>
-                    {this.props.scores.map(score => <li key={score.name}>{score.name} {score.points}</li>)}
+                    {this.props.scores.map((score, index) => (
+                        <li key={score.name} className={`leader-${index + 1}`}>
+                            {score.name} ({score.points} {score.points === 1 ? 'point' : 'points'})
+                        </li>
+                    ))}
                 </ul>
             </div>
         )

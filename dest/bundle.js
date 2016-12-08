@@ -60,6 +60,10 @@
 	
 	var _leaderboard2 = _interopRequireDefault(_leaderboard);
 	
+	var _luke = __webpack_require__(183);
+	
+	var _luke2 = _interopRequireDefault(_luke);
+	
 	__webpack_require__(178);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -111,10 +115,71 @@
 	    function App() {
 	        _classCallCheck(this, App);
 	
-	        return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+	        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
+	
+	        _this.state = {
+	            showLeaderboard: true,
+	            showLukeNumber: -1
+	        };
+	        return _this;
 	    }
 	
 	    _createClass(App, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this2 = this;
+	
+	            setInterval(function () {
+	                if (_this2.state.showLeaderboard) {
+	                    _this2.setState({
+	                        showLeaderboard: false,
+	                        showLukeNumber: 0
+	                    });
+	                } else {
+	                    if (_this2.state.showLukeNumber === calendar.length - 1) {
+	                        _this2.setState({
+	                            showLeaderboard: true,
+	                            showLukeNumber: -1
+	                        });
+	                    } else {
+	                        _this2.setState({
+	                            showLeaderboard: false,
+	                            showLukeNumber: _this2.state.showLukeNumber + 1
+	                        });
+	                    }
+	                }
+	            }, 5000000);
+	        }
+	    }, {
+	        key: 'getLukeData',
+	        value: function getLukeData(num) {
+	            var luke = calendar[num];
+	            var winner = users.find(function (u) {
+	                return u.id === luke.winner;
+	            }).name;
+	            var bonus = void 0;
+	            if (luke.bonus) {
+	                bonus = users.find(function (u) {
+	                    return u.id === luke.bonus;
+	                }).name;
+	            }
+	
+	            return { day: num + 1, winner: winner, bonus: bonus };
+	        }
+	    }, {
+	        key: 'renderHeader',
+	        value: function renderHeader() {
+	            var txt = 'Kryptu Kalendur';
+	
+	            return txt.split('').map(function (char, idx) {
+	                return _react2.default.createElement(
+	                    'span',
+	                    { key: idx, className: 'char char' + idx },
+	                    char
+	                );
+	            });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
@@ -123,9 +188,10 @@
 	                _react2.default.createElement(
 	                    'h1',
 	                    null,
-	                    'Kryptu Kalendur'
+	                    this.renderHeader()
 	                ),
-	                _react2.default.createElement(_leaderboard2.default, { scores: scores })
+	                this.state.showLeaderboard && _react2.default.createElement(_leaderboard2.default, { scores: scores }),
+	                this.state.showLukeNumber > -1 && _react2.default.createElement(_luke2.default, { lukeData: this.getLukeData(this.state.showLukeNumber) })
 	            );
 	        }
 	    }]);
@@ -21577,7 +21643,7 @@
 	
 	
 	// module
-	exports.push([module.id, "#app {\n  text-align: center;\n}\n", ""]);
+	exports.push([module.id, "body {\n  font-family: 'Raleway';\n  font-size: 1.8em;\n}\n#app {\n  text-align: center;\n}\n#app .circ-txt {\n  width: 500px;\n  display: inline-block;\n  margin-bottom: 128px;\n}\n#app h1 {\n  height: 80px;\n}\n#app h1 span {\n  font: 60px 'Bungee';\n  height: 600px;\n  position: absolute;\n  width: 20px;\n  transform-origin: bottom center;\n}\n#app h2 {\n  font-size: 40px;\n}\n#app .char0 {\n  transform: rotate(-35deg);\n}\n#app .char1 {\n  transform: rotate(-30deg);\n}\n#app .char2 {\n  transform: rotate(-25deg);\n}\n#app .char3 {\n  transform: rotate(-20deg);\n}\n#app .char4 {\n  transform: rotate(-15deg);\n}\n#app .char5 {\n  transform: rotate(-10deg);\n}\n#app .char6 {\n  transform: rotate(-5deg);\n}\n#app .char7 {\n  transform: rotate(0deg);\n}\n#app .char8 {\n  transform: rotate(5deg);\n}\n#app .char9 {\n  transform: rotate(10deg);\n}\n#app .char10 {\n  transform: rotate(15deg);\n}\n#app .char11 {\n  transform: rotate(20deg);\n}\n#app .char12 {\n  transform: rotate(25deg);\n}\n#app .char13 {\n  transform: rotate(30deg);\n}\n#app .char14 {\n  transform: rotate(35deg);\n}\n#app .char15 {\n  transform: rotate(40deg);\n}\n#leaderboard {\n  margin: 0 auto;\n  text-align: center;\n}\n#leaderboard ul {\n  display: inline-block;\n}\n#leaderboard li {\n  text-align: left;\n  list-style-type: none;\n  margin-bottom: 10px;\n}\n#leaderboard .leader-1 {\n  font-size: 2em;\n}\n#leaderboard .leader-2 {\n  font-size: 1.5em;\n}\n#leaderboard .leader-3 {\n  font-size: 1.2em;\n}\n#luke img {\n  min-width: 400px;\n  min-height: 400px;\n}\n", ""]);
 	
 	// exports
 
@@ -21894,7 +21960,7 @@
 /* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -21924,26 +21990,29 @@
 	    }
 	
 	    _createClass(Leaderboard, [{
-	        key: "render",
+	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
-	                "div",
-	                { id: "leaderboard" },
+	                'div',
+	                { id: 'leaderboard' },
 	                _react2.default.createElement(
-	                    "h2",
+	                    'h2',
 	                    null,
-	                    "Leaderboard"
+	                    'Leaderboard'
 	                ),
 	                _react2.default.createElement(
-	                    "ul",
+	                    'ul',
 	                    null,
-	                    this.props.scores.map(function (score) {
+	                    this.props.scores.map(function (score, index) {
 	                        return _react2.default.createElement(
-	                            "li",
-	                            { key: score.name },
+	                            'li',
+	                            { key: score.name, className: 'leader-' + (index + 1) },
 	                            score.name,
-	                            " ",
-	                            score.points
+	                            ' (',
+	                            score.points,
+	                            ' ',
+	                            score.points === 1 ? 'point' : 'points',
+	                            ')'
 	                        );
 	                    })
 	                )
@@ -21955,6 +22024,140 @@
 	}(_react.PureComponent);
 	
 	exports.default = Leaderboard;
+
+/***/ },
+/* 183 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _leftPad = __webpack_require__(184);
+	
+	var _leftPad2 = _interopRequireDefault(_leftPad);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Luke = function (_PureComponent) {
+	    _inherits(Luke, _PureComponent);
+	
+	    function Luke() {
+	        _classCallCheck(this, Luke);
+	
+	        return _possibleConstructorReturn(this, (Luke.__proto__ || Object.getPrototypeOf(Luke)).apply(this, arguments));
+	    }
+	
+	    _createClass(Luke, [{
+	        key: 'render',
+	        value: function render() {
+	            var _props$lukeData = this.props.lukeData,
+	                day = _props$lukeData.day,
+	                winner = _props$lukeData.winner,
+	                bonus = _props$lukeData.bonus;
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { id: 'luke' },
+	                _react2.default.createElement(
+	                    'h2',
+	                    null,
+	                    'Luke #',
+	                    day
+	                ),
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    'Vinner: ',
+	                    winner
+	                ),
+	                bonus && _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    'Bonus: ',
+	                    bonus
+	                ),
+	                _react2.default.createElement('img', { src: 'imgs/' + (0, _leftPad2.default)(day, 2, '0') + '.gif' })
+	            );
+	        }
+	    }]);
+	
+	    return Luke;
+	}(_react.PureComponent);
+	
+	exports.default = Luke;
+
+/***/ },
+/* 184 */
+/***/ function(module, exports) {
+
+	/* This program is free software. It comes without any warranty, to
+	     * the extent permitted by applicable law. You can redistribute it
+	     * and/or modify it under the terms of the Do What The Fuck You Want
+	     * To Public License, Version 2, as published by Sam Hocevar. See
+	     * http://www.wtfpl.net/ for more details. */
+	'use strict';
+	module.exports = leftPad;
+	
+	var cache = [
+	  '',
+	  ' ',
+	  '  ',
+	  '   ',
+	  '    ',
+	  '     ',
+	  '      ',
+	  '       ',
+	  '        ',
+	  '         '
+	];
+	
+	function leftPad (str, len, ch) {
+	  // convert `str` to `string`
+	  str = str + '';
+	  // `len` is the `pad`'s length now
+	  len = len - str.length;
+	  // doesn't need to pad
+	  if (len <= 0) return str;
+	  // `ch` defaults to `' '`
+	  if (!ch && ch !== 0) ch = ' ';
+	  // convert `ch` to `string`
+	  ch = ch + '';
+	  // cache common use cases
+	  if (ch === ' ' && len < 10) return cache[len] + str;
+	  // `pad` starts with an empty string
+	  var pad = '';
+	  // loop
+	  while (true) {
+	    // add `ch` to `pad` if `len` is odd
+	    if (len & 1) pad += ch;
+	    // divide `len` by 2, ditch the remainder
+	    len >>= 1;
+	    // "double" the `ch` so this operation count grows logarithmically on `len`
+	    // each time `ch` is "doubled", the `len` would need to be "doubled" too
+	    // similar to finding a value in binary search tree, hence O(log(n))
+	    if (len) ch += ch;
+	    // `len` is 0, exit the loop
+	    else break;
+	  }
+	  // pad `str`!
+	  return pad + str;
+	}
+
 
 /***/ }
 /******/ ]);
