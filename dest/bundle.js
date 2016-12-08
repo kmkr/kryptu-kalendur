@@ -56,15 +56,13 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _leaderboard = __webpack_require__(182);
+	var _reactSnowfetti = __webpack_require__(186);
 	
-	var _leaderboard2 = _interopRequireDefault(_leaderboard);
+	var _reactSnowfetti2 = _interopRequireDefault(_reactSnowfetti);
 	
-	var _luke = __webpack_require__(183);
+	var _app = __webpack_require__(191);
 	
-	var _luke2 = _interopRequireDefault(_luke);
-	
-	__webpack_require__(178);
+	var _app2 = _interopRequireDefault(_app);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -74,132 +72,33 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var users = [{ id: 1, name: 'M. Worren' }, { id: 2, name: 'D00n' }, { id: 3, name: 'T. Virik' }, { id: 4, name: 'DJ MIkky' }, { id: 5, name: 'A. Stokke' }, { id: 6, name: 'B0Do' }, { id: 7, name: 'H. Stokke' }];
+	var Wrapper = function (_PureComponent) {
+	    _inherits(Wrapper, _PureComponent);
 	
-	var calendar = [{ winner: 1, bonus: 1 }, // spirited a
-	{ winner: 2, bonus: 2 }, // jurassic
-	{ winner: 3 }, // moon
-	{ winner: 1 }, // moonrise
-	{ winner: 5 }, // fantastic planet
-	{ winner: 4, bonus: 6 }, // napoleon
-	{ winner: 7, bonus: 7 }, // kung fu hustle
-	{ winner: 5 }];
+	    function Wrapper() {
+	        _classCallCheck(this, Wrapper);
 	
-	var scoreObj = calendar.reduce(function (cur, luke) {
-	    cur[luke.winner] = (cur[luke.winner] || 0) + 1;
-	    if (luke.bonus) {
-	        cur[luke.bonus] = (cur[luke.bonus] || 0) + 0.5;
+	        return _possibleConstructorReturn(this, (Wrapper.__proto__ || Object.getPrototypeOf(Wrapper)).apply(this, arguments));
 	    }
 	
-	    return cur;
-	}, {});
-	
-	var scores = Object.keys(scoreObj).map(function (key) {
-	    return {
-	        name: users.find(function (u) {
-	            return '' + u.id === key;
-	        }).name,
-	        points: scoreObj[key]
-	    };
-	}).sort(function (a, b) {
-	    if (a.points === b.points) {
-	        return 0;
-	    }
-	
-	    return a.points < b.points ? 1 : -1;
-	});
-	
-	var App = function (_PureComponent) {
-	    _inherits(App, _PureComponent);
-	
-	    function App() {
-	        _classCallCheck(this, App);
-	
-	        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
-	
-	        _this.state = {
-	            showLeaderboard: true,
-	            showLukeNumber: -1
-	        };
-	        return _this;
-	    }
-	
-	    _createClass(App, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this2 = this;
-	
-	            setInterval(function () {
-	                if (_this2.state.showLeaderboard) {
-	                    _this2.setState({
-	                        showLeaderboard: false,
-	                        showLukeNumber: 0
-	                    });
-	                } else {
-	                    if (_this2.state.showLukeNumber === calendar.length - 1) {
-	                        _this2.setState({
-	                            showLeaderboard: true,
-	                            showLukeNumber: -1
-	                        });
-	                    } else {
-	                        _this2.setState({
-	                            showLeaderboard: false,
-	                            showLukeNumber: _this2.state.showLukeNumber + 1
-	                        });
-	                    }
-	                }
-	            }, 5000000);
-	        }
-	    }, {
-	        key: 'getLukeData',
-	        value: function getLukeData(num) {
-	            var luke = calendar[num];
-	            var winner = users.find(function (u) {
-	                return u.id === luke.winner;
-	            }).name;
-	            var bonus = void 0;
-	            if (luke.bonus) {
-	                bonus = users.find(function (u) {
-	                    return u.id === luke.bonus;
-	                }).name;
-	            }
-	
-	            return { day: num + 1, winner: winner, bonus: bonus };
-	        }
-	    }, {
-	        key: 'renderHeader',
-	        value: function renderHeader() {
-	            var txt = 'Kryptu Kalendur';
-	
-	            return txt.split('').map(function (char, idx) {
-	                return _react2.default.createElement(
-	                    'span',
-	                    { key: idx, className: 'char char' + idx },
-	                    char
-	                );
-	            });
-	        }
-	    }, {
+	    _createClass(Wrapper, [{
 	        key: 'render',
 	        value: function render() {
+	            var width = window.innerWidth;
+	            var height = window.innerHeight;
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                _react2.default.createElement(
-	                    'h1',
-	                    null,
-	                    this.renderHeader()
-	                ),
-	                this.state.showLeaderboard && _react2.default.createElement(_leaderboard2.default, { scores: scores }),
-	                this.state.showLukeNumber > -1 && _react2.default.createElement(_luke2.default, { lukeData: this.getLukeData(this.state.showLukeNumber) })
+	                _react2.default.createElement(_reactSnowfetti2.default, { amount: 100, width: width, height: height }),
+	                _react2.default.createElement(_app2.default, null)
 	            );
 	        }
 	    }]);
 	
-	    return App;
+	    return Wrapper;
 	}(_react.PureComponent);
 	
-	_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app'));
+	_reactDom2.default.render(_react2.default.createElement(Wrapper, null), document.getElementById('app'));
 
 /***/ },
 /* 1 */
@@ -21643,7 +21542,7 @@
 	
 	
 	// module
-	exports.push([module.id, "body {\n  font-family: 'Raleway';\n  font-size: 1.8em;\n}\n#app {\n  text-align: center;\n}\n#app .circ-txt {\n  width: 500px;\n  display: inline-block;\n  margin-bottom: 128px;\n}\n#app h1 {\n  height: 80px;\n}\n#app h1 span {\n  font: 60px 'Bungee';\n  height: 600px;\n  position: absolute;\n  width: 20px;\n  transform-origin: bottom center;\n}\n#app h2 {\n  font-size: 40px;\n}\n#app .char0 {\n  transform: rotate(-35deg);\n}\n#app .char1 {\n  transform: rotate(-30deg);\n}\n#app .char2 {\n  transform: rotate(-25deg);\n}\n#app .char3 {\n  transform: rotate(-20deg);\n}\n#app .char4 {\n  transform: rotate(-15deg);\n}\n#app .char5 {\n  transform: rotate(-10deg);\n}\n#app .char6 {\n  transform: rotate(-5deg);\n}\n#app .char7 {\n  transform: rotate(0deg);\n}\n#app .char8 {\n  transform: rotate(5deg);\n}\n#app .char9 {\n  transform: rotate(10deg);\n}\n#app .char10 {\n  transform: rotate(15deg);\n}\n#app .char11 {\n  transform: rotate(20deg);\n}\n#app .char12 {\n  transform: rotate(25deg);\n}\n#app .char13 {\n  transform: rotate(30deg);\n}\n#app .char14 {\n  transform: rotate(35deg);\n}\n#app .char15 {\n  transform: rotate(40deg);\n}\n#leaderboard {\n  margin: 0 auto;\n  text-align: center;\n}\n#leaderboard ul {\n  display: inline-block;\n}\n#leaderboard li {\n  text-align: left;\n  list-style-type: none;\n  margin-bottom: 10px;\n}\n#leaderboard .leader-1 {\n  font-size: 2em;\n}\n#leaderboard .leader-2 {\n  font-size: 1.5em;\n}\n#leaderboard .leader-3 {\n  font-size: 1.2em;\n}\n#luke img {\n  min-width: 400px;\n  min-height: 400px;\n}\n", ""]);
+	exports.push([module.id, "body {\n  background-color: #0a2933;\n  color: ghostwhite;\n  font-family: 'Raleway';\n  font-size: 2em;\n}\n#wrapper {\n  margin-top: 100px;\n  position: relative;\n  z-index: 10000;\n}\n#app {\n  text-align: center;\n}\n#app h1 {\n  height: 80px;\n}\n#app h1 span {\n  font: 60px 'Bungee';\n  height: 600px;\n  position: absolute;\n  width: 20px;\n  transform-origin: bottom center;\n}\n#app h2 {\n  font-size: 40px;\n}\n#app .char0 {\n  transform: rotate(-35deg);\n}\n#app .char1 {\n  transform: rotate(-30deg);\n}\n#app .char2 {\n  transform: rotate(-25deg);\n}\n#app .char3 {\n  transform: rotate(-20deg);\n}\n#app .char4 {\n  transform: rotate(-15deg);\n}\n#app .char5 {\n  transform: rotate(-10deg);\n}\n#app .char6 {\n  transform: rotate(-5deg);\n}\n#app .char7 {\n  transform: rotate(0deg);\n}\n#app .char8 {\n  transform: rotate(5deg);\n}\n#app .char9 {\n  transform: rotate(10deg);\n}\n#app .char10 {\n  transform: rotate(15deg);\n}\n#app .char11 {\n  transform: rotate(20deg);\n}\n#app .char12 {\n  transform: rotate(25deg);\n}\n#app .char13 {\n  transform: rotate(30deg);\n}\n#app .char14 {\n  transform: rotate(35deg);\n}\n#app .char15 {\n  transform: rotate(40deg);\n}\n#leaderboard {\n  margin: 0 auto;\n  text-align: center;\n}\n#leaderboard ul {\n  display: inline-block;\n}\n#leaderboard li {\n  text-align: left;\n  list-style-type: none;\n  margin-bottom: 15px;\n}\n#leaderboard .leader-1 {\n  font-size: 2em;\n}\n#leaderboard .leader-2 {\n  font-size: 1.8em;\n}\n#leaderboard .leader-3 {\n  font-size: 1.6em;\n}\n#leaderboard .leader-4 {\n  font-size: 1.4em;\n}\n#leaderboard .leader-4 {\n  font-size: 1.2em;\n}\n#luke img {\n  min-width: 400px;\n  min-height: 400px;\n}\n", ""]);
 	
 	// exports
 
@@ -22063,12 +21962,64 @@
 	    }
 	
 	    _createClass(Luke, [{
-	        key: 'render',
-	        value: function render() {
+	        key: 'renderText',
+	        value: function renderText() {
 	            var _props$lukeData = this.props.lukeData,
-	                day = _props$lukeData.day,
 	                winner = _props$lukeData.winner,
 	                bonus = _props$lukeData.bonus;
+	
+	
+	            if (winner === bonus) {
+	                return _react2.default.createElement(
+	                    'span',
+	                    null,
+	                    _react2.default.createElement(
+	                        'strong',
+	                        null,
+	                        winner
+	                    ),
+	                    ' var b\xE5de raskest og tok bonusen!'
+	                );
+	            }
+	
+	            if (bonus) {
+	                return _react2.default.createElement(
+	                    'span',
+	                    null,
+	                    _react2.default.createElement(
+	                        'strong',
+	                        null,
+	                        winner
+	                    ),
+	                    ' var raskest og ',
+	                    _react2.default.createElement(
+	                        'strong',
+	                        null,
+	                        bonus
+	                    ),
+	                    ' fikk bonus!'
+	                );
+	            }
+	
+	            return _react2.default.createElement(
+	                'span',
+	                null,
+	                _react2.default.createElement(
+	                    'strong',
+	                    null,
+	                    winner
+	                ),
+	                ' vant denne!'
+	            );
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var _props$lukeData2 = this.props.lukeData,
+	                name = _props$lukeData2.name,
+	                day = _props$lukeData2.day,
+	                winner = _props$lukeData2.winner,
+	                bonus = _props$lukeData2.bonus;
 	
 	            return _react2.default.createElement(
 	                'div',
@@ -22076,22 +22027,20 @@
 	                _react2.default.createElement(
 	                    'h2',
 	                    null,
-	                    'Luke #',
+	                    '#',
 	                    day
+	                ),
+	                _react2.default.createElement('img', { src: 'imgs/' + (0, _leftPad2.default)(day, 2, '0') + '.gif' }),
+	                _react2.default.createElement(
+	                    'h3',
+	                    null,
+	                    name
 	                ),
 	                _react2.default.createElement(
 	                    'p',
 	                    null,
-	                    'Vinner: ',
-	                    winner
-	                ),
-	                bonus && _react2.default.createElement(
-	                    'p',
-	                    null,
-	                    'Bonus: ',
-	                    bonus
-	                ),
-	                _react2.default.createElement('img', { src: 'imgs/' + (0, _leftPad2.default)(day, 2, '0') + '.gif' })
+	                    this.renderText()
+	                )
 	            );
 	        }
 	    }]);
@@ -22158,6 +22107,661 @@
 	  return pad + str;
 	}
 
+
+/***/ },
+/* 185 */,
+/* 186 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _Canvas = __webpack_require__(187);
+	
+	var _Canvas2 = _interopRequireDefault(_Canvas);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = _Canvas2.default;
+	//# sourceMappingURL=index.js.map
+
+/***/ },
+/* 187 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; })();
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _particle = __webpack_require__(188);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var PropTypes = _react2.default.PropTypes;
+	
+	var PROFILE = ['snow', 'steady'];
+	var AMOUNT = 800;
+	var WIDTH = 600;
+	var HEIGHT = 300;
+	var STYLES = {
+		backgroundColor: '#0A2933',
+		position: 'absolute',
+		top: '0',
+		left: '0'
+	};
+	
+	exports.default = _react2.default.createClass({
+		displayName: 'Canvas',
+	
+		propTypes: {
+			width: PropTypes.number,
+			height: PropTypes.number,
+			style: PropTypes.object,
+			amount: PropTypes.number,
+			profile: PropTypes.array
+		},
+	
+		/**
+	  * Canvas context.
+	  *
+	  * @type {object}
+	  *
+	  * @see `render()`
+	  */
+		ctx: null,
+	
+		/**
+	  * Dynamic particle x coordinate value, determined by the mouse
+	  * cursor position.
+	  *
+	  * @type {number}
+	  *
+	  * @see `handleMouseMove()`
+	  */
+		dynamicX: 1,
+	
+		/**
+	  * Draws particles on the canvas by continiously updating the
+	  * particle values.
+	  *
+	  * @param  {array} particles - particle Objects to be rendered
+	  */
+		draw: function draw(particles) {
+	
+			/**
+	   * Note that angles are measured in radians:
+	   *
+	   * radians = (Math.PI / 180) * degrees
+	   */
+			var startAngle = 0;
+			var endAngle = 2 * Math.PI; // 360 degrees in radians
+			var antiClockwise = true;
+			var ctx = this.ctx;
+			var dynamicX = this.dynamicX;
+			var _props = this.props;
+			var _props$width = _props.width;
+			var width = _props$width === undefined ? WIDTH : _props$width;
+			var _props$height = _props.height;
+			var height = _props$height === undefined ? HEIGHT : _props$height;
+			var _props$profile = _props.profile;
+			var profile = _props$profile === undefined ? PROFILE : _props$profile;
+	
+			var _profile = _slicedToArray(profile, 1);
+	
+			var type = _profile[0];
+	
+			// Clear the canvas context before updating and animating the particles.
+	
+			ctx.clearRect(0, 0, width, height);
+	
+			// Updates the particle values before (re) drawing to create an animation on the canvas.
+			particles.forEach(function (particle) {
+				var deltaX = particle.deltaX;
+				var deltaY = particle.deltaY;
+				var color = particle.color;
+				var radius = particle.radius;
+				var opacity = particle.opacity;
+				var deltaOpacity = particle.deltaOpacity;
+	
+				// Update particle values before animating.
+	
+				particle.x += deltaX + 1.33 * dynamicX;
+				particle.y += deltaY;
+	
+				// Update particle opacity based on particle type.
+				switch (type) {
+					case 'snow':
+						{
+							particle.opacity = opacity;
+	
+							break;
+						}
+	
+					case 'confetti':
+						{
+							if (particle.opacity <= 0) {
+								particle.opacity += deltaOpacity;
+							}
+	
+							if (particle.opacity > 0) {
+								particle.opacity -= deltaOpacity;
+							}
+	
+							break;
+						}
+				}
+	
+				// Style the particles.
+				ctx.fillStyle = color;
+				ctx.globalAlpha = particle.opacity;
+	
+				// Animate the particles.
+				ctx.beginPath();
+				ctx.arc(particle.x, particle.y, radius, startAngle, endAngle, antiClockwise);
+				ctx.fill();
+				ctx.closePath();
+	
+				// Re initialize the particle when it falls out of the view port.
+				if (particle.y > height) {
+					particle.init();
+				}
+			});
+	
+			this.animate(particles);
+		},
+	
+		/**
+	  * Animate by drawing all particles.
+	  *
+	  * @param  {array} particles - particle Objects to be rendered
+	  */
+		animate: function animate(particles) {
+			window.requestAnimationFrame(this.draw.bind(this, particles));
+		},
+	
+		/**
+	  * Calculates the dynamic particle x coordinate based on
+	  * the mouse cursor position.
+	  *
+	  * @param  {object} event - the event Object
+	  */
+		handleMouseMove: function handleMouseMove(event) {
+			var _props$width2 = this.props.width;
+			var width = _props$width2 === undefined ? WIDTH : _props$width2;
+	
+			this.dynamicX = event.pageX / width;
+		},
+		componentDidMount: function componentDidMount() {
+			var _props2 = this.props;
+			var _props2$profile = _props2.profile;
+			var profile = _props2$profile === undefined ? PROFILE : _props2$profile;
+			var _props2$amount = _props2.amount;
+			var amount = _props2$amount === undefined ? AMOUNT : _props2$amount;
+			var _props2$width = _props2.width;
+			var width = _props2$width === undefined ? WIDTH : _props2$width;
+			var _props2$height = _props2.height;
+			var height = _props2$height === undefined ? HEIGHT : _props2$height;
+	
+			var particles = (0, _particle.generateParticles)(profile, amount, { width: width, height: height });
+	
+			this.animate(particles);
+		},
+		render: function render() {
+			var _this = this;
+	
+			var _props3 = this.props;
+			var _props3$width = _props3.width;
+			var width = _props3$width === undefined ? WIDTH : _props3$width;
+			var _props3$height = _props3.height;
+			var height = _props3$height === undefined ? HEIGHT : _props3$height;
+			var _props3$styles = _props3.styles;
+			var styles = _props3$styles === undefined ? STYLES : _props3$styles;
+	
+			return _react2.default.createElement(
+				'canvas',
+				{
+					id: 'react-snowfetti',
+					width: width,
+					height: height,
+					style: styles,
+					ref: function ref(canvas) {
+						return _this.ctx = canvas.getContext('2d');
+					},
+					onMouseMove: this.handleMouseMove
+				},
+				_react2.default.createElement(
+					'h3',
+					null,
+					'Oh no! You do not have support for the html5 canvas API!'
+				)
+			);
+		}
+	});
+	//# sourceMappingURL=Canvas.js.map
+
+/***/ },
+/* 188 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.generateParticles = generateParticles;
+	
+	var _profiles = __webpack_require__(189);
+	
+	/**
+	 * Create a single particle Object.
+	 *
+	 * @private
+	 *
+	 * @param  {array}  profile - particle profile that contains type and velocity
+	 * @param  {object} bounds  - canvas width and height
+	 *
+	 * @return {object} particle Object
+	 */
+	function _createParticle(profile, _ref) {
+		var width = _ref.width;
+		var height = _ref.height;
+		var _Math = Math;
+		var random = _Math.random;
+	
+		var _getParticleValues = (0, _profiles.getParticleValues)(profile);
+	
+		var deltaX = _getParticleValues.deltaX;
+		var deltaY = _getParticleValues.deltaY;
+		var deltaOpacity = _getParticleValues.deltaOpacity;
+		var radius = _getParticleValues.radius;
+		var color = _getParticleValues.color;
+		var opacity = _getParticleValues.opacity;
+	
+		return {
+			init: function init() {
+				this.x = random() * width;
+				this.y = random() * -height;
+				this.deltaX = deltaX;
+				this.deltaY = deltaY;
+				this.color = color;
+				this.radius = radius;
+				this.opacity = opacity;
+				this.deltaOpacity = deltaOpacity;
+	
+				return this;
+			}
+		};
+	}
+	
+	/**
+	 * Generates a specific amount of particles to be rendered
+	 * on the canvas based on the specified particle profile.
+	 *
+	 * @param  {array}  profile - particle profile that contains type and velocity
+	 * @param  {number} amount  - the amount of particles to be rendered
+	 * @param  {object} bounds  - canvas width and height
+	 *
+	 * @return {array} particle Objects to be rendered
+	 */
+	function generateParticles(profile, amount, bounds) {
+		var particles = [];
+	
+		while (amount--) {
+			var particle = _createParticle(profile, bounds);
+	
+			particle.init();
+			particles.push(particle);
+		}
+	
+		return particles;
+	}
+	//# sourceMappingURL=particle.js.map
+
+/***/ },
+/* 189 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; })();
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.getParticleValues = getParticleValues;
+	
+	var _randomHex = __webpack_require__(190);
+	
+	var _randomHex2 = _interopRequireDefault(_randomHex);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var _Math = Math;
+	var random = _Math.random;
+	var floor = _Math.floor;
+	
+	/**
+	 * Retrieves a random color from the supplied color
+	 * palette.
+	 *
+	 * @private
+	 *
+	 * @param  {array} palette - contains hex color strings
+	 *
+	 * @return {string} random hex color code
+	 */
+	
+	function _getRandomPaletteColor(palette) {
+		var i = floor(random() * palette.length);
+	
+		return palette[i];
+	}
+	
+	/**
+	 * Hash map of particle types.
+	 *
+	 * @type {Object}
+	 */
+	var TYPES = {
+	
+		/**
+	  * Retrieves the visual values of a `snow` particle.
+	  *
+	  * @param  {array} palette - optional hex color strings
+	  *
+	  * @return {object} snow particle values.
+	  */
+	
+		snow: function snow(palette) {
+			var color = palette && palette.length ? _getRandomPaletteColor(palette) : '#fff';
+	
+			return {
+				color: color,
+				radius: 0.4 + random() * 2,
+				opacity: 0.5 + random() * 0.5
+			};
+		},
+	
+		/**
+	  * Retrieves the visual values of a `confetti` particle.
+	  *
+	  * @param  {array} palette - optional hex color strings
+	  *
+	  * @return {object} confetti particle values.
+	  */
+		confetti: function confetti(palette) {
+			var color = palette && palette.length ? _getRandomPaletteColor(palette) : _randomHex2.default.generate();
+	
+			return {
+				color: color,
+				radius: 0.2 + random() * 4,
+				opacity: 1,
+				deltaOpacity: 0.05 * random()
+			};
+		}
+	};
+	
+	/**
+	 * Hash map of particle velocity types.
+	 *
+	 * @type {Object}
+	 */
+	var VELOCITIES = {
+	
+		/**
+	  * Retrieves the kinetic values of a `slow` particle.
+	  *
+	  * @return {object} kinetic particle values.
+	  */
+	
+		slow: function slow() {
+			return {
+				deltaX: 0.35 - random(),
+				deltaY: 0.15 + random() * 1.1
+			};
+		},
+	
+		/**
+	  * Retrieves the kinetic values of a `steady` particle.
+	  *
+	  * @return {object} kinetic particle values.
+	  */
+		steady: function steady() {
+			return {
+				deltaX: 0.25 - random(),
+				deltaY: 0.8 + random() * 0.4 + random() * 2
+			};
+		},
+	
+		/**
+	  * Retrieves the kinetic values of a `fast` particle.
+	  *
+	  * @return {object} kinetic particle values.
+	  */
+		fast: function fast() {
+			return {
+				deltaX: 0.25 - random(),
+				deltaY: 1.1 + random() * 0.4 + random() * 2
+			};
+		}
+	};
+	
+	/**
+	 * Retrieves all particle values denoted by a specific
+	 * profile.
+	 *
+	 * @param  {array} profile - contains `type`, `velocity` and optional `palette`
+	 *
+	 * @return {object} contains all particle values
+	 */
+	function getParticleValues(_ref) {
+		var _ref2 = _slicedToArray(_ref, 3);
+	
+		var _ref2$ = _ref2[0];
+		var type = _ref2$ === undefined ? 'snow' : _ref2$;
+		var _ref2$2 = _ref2[1];
+		var velocity = _ref2$2 === undefined ? 'slow' : _ref2$2;
+		var _ref2$3 = _ref2[2];
+		var palette = _ref2$3 === undefined ? [] : _ref2$3;
+	
+		return Object.assign({}, TYPES[type](palette), VELOCITIES[velocity]());
+	};
+	//# sourceMappingURL=profiles.js.map
+
+/***/ },
+/* 190 */
+/***/ function(module, exports) {
+
+	/**
+	 * @module RandomHex
+	 */
+	
+	module.exports.generate = function () {
+		var random = Math.random();
+		var exponent = --random.toExponential().split('-')[1];
+	
+		// Make sure random number is between 1.0 and 0.1 to assure correct hex values.
+		random *= Math.pow(10, exponent);
+	
+		return '#' + ( ~~(random * (1 << 24) )).toString(16);
+	};
+
+
+/***/ },
+/* 191 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _leaderboard = __webpack_require__(182);
+	
+	var _leaderboard2 = _interopRequireDefault(_leaderboard);
+	
+	var _luke = __webpack_require__(183);
+	
+	var _luke2 = _interopRequireDefault(_luke);
+	
+	__webpack_require__(178);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var users = [{ id: 1, name: 'M. Worren' }, { id: 2, name: 'D00n' }, { id: 3, name: 'T. Virik' }, { id: 4, name: 'DJ MIkky' }, { id: 5, name: 'A. Stokke' }, { id: 6, name: 'B0Do' }, { id: 7, name: 'H. Stokke' }];
+	
+	var calendar = [{ name: 'Spirited Away', winner: 1, bonus: 1 }, { name: 'Jurussika Park', winner: 2, bonus: 2 }, { name: 'Moon', winner: 3 }, { name: 'Moonrise Kingdom', winner: 1 }, { name: 'Fantastic Planet', winner: 5 }, { name: 'Napoleon Dynamite', winner: 4, bonus: 6 }, { name: 'Kung Fu Hustle', winner: 7, bonus: 7 }, { name: 'Under The Skin', winner: 5 }];
+	
+	var scoreObj = calendar.reduce(function (cur, luke) {
+	    cur[luke.winner] = (cur[luke.winner] || 0) + 1;
+	    if (luke.bonus) {
+	        cur[luke.bonus] = (cur[luke.bonus] || 0) + 0.5;
+	    }
+	
+	    return cur;
+	}, {});
+	
+	var scores = Object.keys(scoreObj).map(function (key) {
+	    return {
+	        name: users.find(function (u) {
+	            return '' + u.id === key;
+	        }).name,
+	        points: scoreObj[key]
+	    };
+	}).sort(function (a, b) {
+	    if (a.points === b.points) {
+	        return 0;
+	    }
+	
+	    return a.points < b.points ? 1 : -1;
+	});
+	
+	var App = function (_PureComponent) {
+	    _inherits(App, _PureComponent);
+	
+	    function App() {
+	        _classCallCheck(this, App);
+	
+	        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
+	
+	        _this.state = {
+	            showLeaderboard: true,
+	            showLukeNumber: -1
+	        };
+	        return _this;
+	    }
+	
+	    _createClass(App, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this2 = this;
+	
+	            setInterval(function () {
+	                if (_this2.state.showLeaderboard) {
+	                    _this2.setState({
+	                        showLeaderboard: false,
+	                        showLukeNumber: 0
+	                    });
+	                } else {
+	                    if (_this2.state.showLukeNumber === calendar.length - 1) {
+	                        _this2.setState({
+	                            showLeaderboard: true,
+	                            showLukeNumber: -1
+	                        });
+	                    } else {
+	                        _this2.setState({
+	                            showLeaderboard: false,
+	                            showLukeNumber: _this2.state.showLukeNumber + 1
+	                        });
+	                    }
+	                }
+	            }, 12000);
+	        }
+	    }, {
+	        key: 'getLukeData',
+	        value: function getLukeData(num) {
+	            var luke = calendar[num];
+	            var winner = users.find(function (u) {
+	                return u.id === luke.winner;
+	            }).name;
+	            var bonus = void 0;
+	            if (luke.bonus) {
+	                bonus = users.find(function (u) {
+	                    return u.id === luke.bonus;
+	                }).name;
+	            }
+	
+	            return {
+	                day: num + 1,
+	                winner: winner,
+	                bonus: bonus,
+	                name: luke.name
+	            };
+	        }
+	    }, {
+	        key: 'renderHeader',
+	        value: function renderHeader() {
+	            var txt = 'Kryptu Kalendur';
+	
+	            return txt.split('').map(function (char, idx) {
+	                return _react2.default.createElement(
+	                    'span',
+	                    { key: idx, className: 'char' + idx },
+	                    char
+	                );
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var width = window.innerWidth;
+	            var height = window.innerHeight;
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'div',
+	                    { id: 'wrapper' },
+	                    _react2.default.createElement(
+	                        'h1',
+	                        null,
+	                        this.renderHeader()
+	                    ),
+	                    this.state.showLeaderboard && _react2.default.createElement(_leaderboard2.default, { scores: scores }),
+	                    this.state.showLukeNumber > -1 && _react2.default.createElement(_luke2.default, { lukeData: this.getLukeData(this.state.showLukeNumber) })
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return App;
+	}(_react.PureComponent);
+	
+	exports.default = App;
 
 /***/ }
 /******/ ]);
