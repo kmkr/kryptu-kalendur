@@ -16,13 +16,15 @@ const users = [
 
 const calendar = [
     {name: 'Spirited Away', winner: 1, bonus: 1},
-    {name: 'Jurussika Park', winner: 2, bonus: 2},
+    {name: 'Jurassic Park (AKA Jurussika Park)', winner: 2, bonus: 2},
     {name: 'Moon', winner: 3},
     {name: 'Moonrise Kingdom', winner: 1},
     {name: 'Fantastic Planet', winner: 5},
     {name: 'Napoleon Dynamite', winner: 4, bonus: 6},
     {name: 'Kung Fu Hustle', winner: 7, bonus: 7},
     {name: 'Under The Skin', winner: 5},
+    {name: '2001 A Space Odyssey', winner: 5, bonus: 5},
+    {name: 'Snatch', winner: 3, bonus: 3},
 ];
 
 const scoreObj = calendar.reduce((cur, luke) => {
