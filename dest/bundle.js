@@ -22032,7 +22032,7 @@
 	
 	var users = [{ id: 1, name: 'M. Worren' }, { id: 2, name: 'Dune' }, { id: 3, name: 'T. Virik' }, { id: 4, name: 'DJ MIkky' }, { id: 5, name: 'A. Stokke' }, { id: 6, name: 'B0Do' }, { id: 7, name: 'H. Stokke' }, { id: 8, name: 'H0mo' }, { id: 9, name: 'Second Father' }, { id: 10, name: 'Matty' }, { id: 11, name: 'Guddi' }, { id: 12, name: 'Roondi' }];
 	
-	var calendar = [{ name: 'Spirited Away', winner: 1, bonus: 1 }, { name: 'Jurassic Park (AKA Jurussika Park)', winner: 2, bonus: 2 }, { name: 'Moon', winner: 3 }, { name: 'Moonrise Kingdom', winner: 1 }, { name: 'Fantastic Planet', winner: 5, extra: { id: 4, points: 0.5 } }, { name: 'Napoleon Dynamite', winner: 4, bonus: 6 }, { name: 'Kung Fu Hustle', winner: 7, bonus: 7 }, { name: 'Under The Skin', winner: 5 }, { name: '2001 A Space Odyssey', winner: 5, bonus: 5 }, { name: 'Snatch', winner: 3, bonus: 3 }, { name: 'Delicatessen', winner: 1 }, { name: 'Star Wars Ep 4', winner: 8, bonus: 9, extra: { id: 10, points: 0.25 } }, { name: 'Nausicaã', winner: 1, bonus: 1, extra: { id: 5, points: 1 } }, { name: 'Alien', winner: 1, bonus: 5 }, { name: 'It Follows', winner: 5 }, { name: 'Blade Runner', winner: 5, bonus: 5, extra: { id: 7, points: 1 } }, { name: 'The Red Turtle', winner: 11 }, { name: 'Pulp Fiction', winner: 5 }, { name: 'The Iron Giant', winner: 5 }, { name: 'The Meaning of Life', winner: 6, extra: { id: 12, points: 0.75 } }, { name: 'Corpse Bride', winner: 1 }, { name: 'The Big Fish', winner: 1, bonus: 1 }, { name: 'Wild Tales', winner: 8 }, { name: 'The Intouchables', winner: 2, bonus: 1 }];
+	var calendar = [{ day: 1, name: 'Spirited Away', winner: 1, bonus: 1 }, { day: 2, name: 'Jurassic Park (AKA Jurussika Park)', winner: 2, bonus: 2 }, { day: 3, name: 'Moon', winner: 3 }, { day: 4, name: 'Moonrise Kingdom', winner: 1 }, { day: 5, name: 'Fantastic Planet', winner: 5, extra: { id: 4, points: 0.5 } }, { day: 6, name: 'Napoleon Dynamite', winner: 4, bonus: 6 }, { day: 7, name: 'Kung Fu Hustle', winner: 7, bonus: 7 }, { day: 8, name: 'Under The Skin', winner: 5 }, { day: 9, name: '2001 A Space Odyssey', winner: 5, bonus: 5 }, { day: 10, name: 'Snatch', winner: 3, bonus: 3 }, { day: 11, name: 'Delicatessen', winner: 1 }, { day: 12, name: 'Star Wars Ep 4', winner: 8, bonus: 9, extra: { id: 10, points: 0.25 } }, { day: 13, name: 'Nausicaã', winner: 1, bonus: 1, extra: { id: 5, points: 1 } }, { day: 14, name: 'Alien', winner: 1, bonus: 5 }, { day: 15, name: 'It Follows', winner: 5 }, { day: 16, name: 'Blade Runner', winner: 5, bonus: 5, extra: { id: 7, points: 1 } }, { day: 17, name: 'The Red Turtle', winner: 11 }, { day: 18, name: 'Pulp Fiction', winner: 5 }, { day: 19, name: 'The Iron Giant', winner: 5 }, { day: 20, name: 'The Meaning of Life', winner: 6, extra: { id: 12, points: 0.75 } }, { day: 21, name: 'Corpse Bride', winner: 1 }, { day: 21, name: 'The Big Fish', winner: 1, bonus: 1 }, { day: 22, name: 'Wild Tales', winner: 8 }, { day: 23, name: 'The Intouchables', winner: 2, bonus: 1 }];
 	
 	var scoreObj = calendar.reduce(function (cur, luke) {
 	    cur[luke.winner] = (cur[luke.winner] || 0) + 1;
@@ -22062,6 +22062,9 @@
 	    return a.points < b.points ? 1 : -1;
 	});
 	
+	var BACK_KEYS = [33,, /* pg up */37 /* arrow left */ /* 38 arrow up */];
+	var NEXT_KEYS = [32 /* space */, 34 /* pgdn */, 39 /* arrow right */ /*, 40 arrow down */];
+	
 	var App = function (_PureComponent) {
 	    _inherits(App, _PureComponent);
 	
@@ -22082,26 +22085,64 @@
 	        value: function componentDidMount() {
 	            var _this2 = this;
 	
-	            setInterval(function () {
-	                if (_this2.state.showLeaderboard) {
-	                    _this2.setState({
-	                        showLeaderboard: false,
-	                        showLukeNumber: 0
+	            window.addEventListener('keydown', function (e) {
+	                return _this2.handleKeyDown(e);
+	            });
+	        }
+	    }, {
+	        key: 'handleKeyDown',
+	        value: function handleKeyDown(e) {
+	            var keyCode = e.keyCode || e.detail.keyCode;
+	
+	            if (BACK_KEYS.indexOf(keyCode) !== -1) {
+	                this.back();
+	            } else if (NEXT_KEYS.indexOf(keyCode) !== -1) {
+	                this.next();
+	            }
+	        }
+	    }, {
+	        key: 'back',
+	        value: function back() {
+	            if (this.state.showLeaderboard) {
+	                this.setState({
+	                    showLeaderboard: false,
+	                    showLukeNumber: calendar.length - 1
+	                });
+	            } else {
+	                if (this.state.showLukeNumber === 0) {
+	                    this.setState({
+	                        showLeaderboard: true,
+	                        showLukeNumber: -1
 	                    });
 	                } else {
-	                    if (_this2.state.showLukeNumber === calendar.length - 1) {
-	                        _this2.setState({
-	                            showLeaderboard: true,
-	                            showLukeNumber: -1
-	                        });
-	                    } else {
-	                        _this2.setState({
-	                            showLeaderboard: false,
-	                            showLukeNumber: _this2.state.showLukeNumber + 1
-	                        });
-	                    }
+	                    this.setState({
+	                        showLeaderboard: false,
+	                        showLukeNumber: this.state.showLukeNumber - 1
+	                    });
 	                }
-	            }, 2000);
+	            }
+	        }
+	    }, {
+	        key: 'next',
+	        value: function next() {
+	            if (this.state.showLeaderboard) {
+	                this.setState({
+	                    showLeaderboard: false,
+	                    showLukeNumber: 0
+	                });
+	            } else {
+	                if (this.state.showLukeNumber === calendar.length - 1) {
+	                    this.setState({
+	                        showLeaderboard: true,
+	                        showLukeNumber: -1
+	                    });
+	                } else {
+	                    this.setState({
+	                        showLeaderboard: false,
+	                        showLukeNumber: this.state.showLukeNumber + 1
+	                    });
+	                }
+	            }
 	        }
 	    }, {
 	        key: 'getLukeData',
@@ -22128,7 +22169,7 @@
 	            }
 	
 	            return {
-	                day: num + 1,
+	                day: luke.day,
 	                extra: extra,
 	                winner: winner,
 	                bonus: bonus,
@@ -22164,8 +22205,18 @@
 	                        null,
 	                        this.renderHeader()
 	                    ),
-	                    this.state.showLeaderboard && _react2.default.createElement(_leaderboard2.default, { scores: scores }),
-	                    this.state.showLukeNumber > -1 && _react2.default.createElement(_luke2.default, { lukeData: this.getLukeData(this.state.showLukeNumber) })
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'grid' },
+	                        _react2.default.createElement('div', { className: 'arrow-left', onClick: this.back.bind(this) }),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'middle' },
+	                            this.state.showLeaderboard && _react2.default.createElement(_leaderboard2.default, { scores: scores }),
+	                            this.state.showLukeNumber > -1 && _react2.default.createElement(_luke2.default, { lukeData: this.getLukeData(this.state.showLukeNumber) })
+	                        ),
+	                        _react2.default.createElement('div', { className: 'arrow-right', onClick: this.next.bind(this) })
+	                    )
 	                )
 	            );
 	        }
@@ -22447,7 +22498,7 @@
 	
 	
 	// module
-	exports.push([module.id, "body {\n  background-color: #0a2933;\n  color: ghostwhite;\n  font-family: 'Raleway';\n  font-size: 2em;\n}\n#wrapper {\n  margin-top: 100px;\n  position: relative;\n  z-index: 10000;\n}\n#app {\n  text-align: center;\n}\n#app h1 {\n  height: 80px;\n}\n#app h1 span {\n  font: 60px 'Bungee';\n  height: 600px;\n  position: absolute;\n  width: 20px;\n  transform-origin: bottom center;\n}\n#app h2 {\n  font-size: 40px;\n}\n#app .char0 {\n  transform: rotate(-35deg);\n}\n#app .char1 {\n  transform: rotate(-30deg);\n}\n#app .char2 {\n  transform: rotate(-25deg);\n}\n#app .char3 {\n  transform: rotate(-20deg);\n}\n#app .char4 {\n  transform: rotate(-15deg);\n}\n#app .char5 {\n  transform: rotate(-10deg);\n}\n#app .char6 {\n  transform: rotate(-5deg);\n}\n#app .char7 {\n  transform: rotate(0deg);\n}\n#app .char8 {\n  transform: rotate(5deg);\n}\n#app .char9 {\n  transform: rotate(10deg);\n}\n#app .char10 {\n  transform: rotate(15deg);\n}\n#app .char11 {\n  transform: rotate(20deg);\n}\n#app .char12 {\n  transform: rotate(25deg);\n}\n#app .char13 {\n  transform: rotate(30deg);\n}\n#app .char14 {\n  transform: rotate(35deg);\n}\n#app .char15 {\n  transform: rotate(40deg);\n}\n#leaderboard {\n  margin: 0 auto;\n  text-align: center;\n}\n#leaderboard ul {\n  display: inline-block;\n}\n#leaderboard li {\n  text-align: left;\n  list-style-type: none;\n  margin-bottom: 15px;\n}\n#leaderboard .leader-1 {\n  font-size: 2em;\n}\n#leaderboard .leader-2 {\n  font-size: 1.8em;\n}\n#leaderboard .leader-3 {\n  font-size: 1.6em;\n}\n#leaderboard .leader-4 {\n  font-size: 1.4em;\n}\n#leaderboard .leader-4 {\n  font-size: 1.2em;\n}\n#luke img.icon {\n  width: 50px;\n  height: 50px;\n}\n#luke img.gif {\n  min-width: 400px;\n  min-height: 400px;\n}\n", ""]);
+	exports.push([module.id, "html,\nbody {\n  max-width: 100%;\n  overflow-x: hidden;\n  overflow-y: scroll;\n}\nbody {\n  background-color: #0a2933;\n  color: ghostwhite;\n  font-family: 'Raleway';\n}\n@media (min-width: 480px) {\n  body {\n    font-size: 1.8em;\n  }\n}\n.arrow-right,\n.arrow-left {\n  width: 0;\n  height: 0;\n  border-top: 55px solid transparent;\n  border-bottom: 55px solid transparent;\n  cursor: pointer;\n  position: fixed;\n  top: 45%;\n}\n@media (max-width: 480px) {\n  .arrow-right,\n  .arrow-left {\n    border-top: 35px solid transparent;\n    border-bottom: 35px solid transparent;\n  }\n}\n.arrow-right {\n  border-left: 55px solid indianred;\n  right: 2%;\n}\n@media (max-width: 480px) {\n  .arrow-right {\n    border-left: 35px solid indianred;\n  }\n}\n.arrow-right:hover {\n  border-left: 55px solid crimson;\n}\n@media (max-width: 480px) {\n  .arrow-right:hover {\n    border-left: 35px solid crimson;\n  }\n}\n.arrow-left {\n  border-right: 55px solid indianred;\n  left: 2%;\n}\n@media (max-width: 480px) {\n  .arrow-left {\n    border-right: 35px solid indianred;\n  }\n}\n.arrow-left:hover {\n  border-right: 55px solid crimson;\n}\n@media (max-width: 480px) {\n  .arrow-left:hover {\n    border-right: 35px solid crimson;\n  }\n}\n#wrapper {\n  margin-top: 5px;\n  position: relative;\n  z-index: 10000;\n}\n.grid {\n  display: flex;\n  justify-content: center;\n}\n#app {\n  margin: 0 auto;\n  text-align: center;\n}\n#app h1 span {\n  font-family: 'Bungee';\n}\n#leaderboard ul {\n  display: inline-block;\n  margin-left: 0;\n  padding-left: 0;\n}\n#leaderboard li {\n  text-align: left;\n  list-style-type: none;\n  margin-bottom: 15px;\n}\n#leaderboard .leader-1 {\n  font-size: 2em;\n}\n#leaderboard .leader-2 {\n  font-size: 1.8em;\n}\n#leaderboard .leader-3 {\n  font-size: 1.6em;\n}\n#leaderboard .leader-4 {\n  font-size: 1.4em;\n}\n#leaderboard .leader-4 {\n  font-size: 1.2em;\n}\n#luke img.icon {\n  width: 50px;\n  height: 50px;\n}\n#luke img.gif {\n  min-width: 400px;\n  min-height: 400px;\n}\n", ""]);
 	
 	// exports
 

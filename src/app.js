@@ -20,30 +20,30 @@ const users = [
 ];
 
 const calendar = [
-    {name: 'Spirited Away', winner: 1, bonus: 1},
-    {name: 'Jurassic Park (AKA Jurussika Park)', winner: 2, bonus: 2},
-    {name: 'Moon', winner: 3},
-    {name: 'Moonrise Kingdom', winner: 1},
-    {name: 'Fantastic Planet', winner: 5, extra: { id: 4, points: 0.5 }},
-    {name: 'Napoleon Dynamite', winner: 4, bonus: 6},
-    {name: 'Kung Fu Hustle', winner: 7, bonus: 7},
-    {name: 'Under The Skin', winner: 5},
-    {name: '2001 A Space Odyssey', winner: 5, bonus: 5},
-    {name: 'Snatch', winner: 3, bonus: 3},
-    {name: 'Delicatessen', winner: 1},
-    {name: 'Star Wars Ep 4', winner: 8, bonus: 9, extra: { id: 10, points: 0.25 }},
-    {name: 'Nausicaã', winner: 1, bonus: 1, extra: { id: 5, points: 1 } },
-    {name: 'Alien', winner: 1, bonus: 5 },
-    {name: 'It Follows', winner: 5 },
-    {name: 'Blade Runner', winner: 5, bonus: 5, extra: { id: 7, points: 1 } },
-    {name: 'The Red Turtle', winner: 11 },
-    {name: 'Pulp Fiction', winner: 5 },
-    {name: 'The Iron Giant', winner: 5 },
-    {name: 'The Meaning of Life', winner: 6, extra: { id: 12, points: 0.75 } },
-    {name: 'Corpse Bride', winner: 1 },
-    {name: 'The Big Fish', winner: 1, bonus: 1 },
-    {name: 'Wild Tales', winner: 8 },
-    {name: 'The Intouchables', winner: 2, bonus: 1 },
+    {day: 1, name: 'Spirited Away', winner: 1, bonus: 1},
+    {day: 2, name: 'Jurassic Park (AKA Jurussika Park)', winner: 2, bonus: 2},
+    {day: 3, name: 'Moon', winner: 3},
+    {day: 4, name: 'Moonrise Kingdom', winner: 1},
+    {day: 5, name: 'Fantastic Planet', winner: 5, extra: { id: 4, points: 0.5 }},
+    {day: 6, name: 'Napoleon Dynamite', winner: 4, bonus: 6},
+    {day: 7, name: 'Kung Fu Hustle', winner: 7, bonus: 7},
+    {day: 8, name: 'Under The Skin', winner: 5},
+    {day: 9, name: '2001 A Space Odyssey', winner: 5, bonus: 5},
+    {day: 10, name: 'Snatch', winner: 3, bonus: 3},
+    {day: 11, name: 'Delicatessen', winner: 1},
+    {day: 12, name: 'Star Wars Ep 4', winner: 8, bonus: 9, extra: { id: 10, points: 0.25 }},
+    {day: 13, name: 'Nausicaã', winner: 1, bonus: 1, extra: { id: 5, points: 1 } },
+    {day: 14, name: 'Alien', winner: 1, bonus: 5 },
+    {day: 15, name: 'It Follows', winner: 5 },
+    {day: 16, name: 'Blade Runner', winner: 5, bonus: 5, extra: { id: 7, points: 1 } },
+    {day: 17, name: 'The Red Turtle', winner: 11 },
+    {day: 18, name: 'Pulp Fiction', winner: 5 },
+    {day: 19, name: 'The Iron Giant', winner: 5 },
+    {day: 20, name: 'The Meaning of Life', winner: 6, extra: { id: 12, points: 0.75 } },
+    {day: 21, name: 'Corpse Bride', winner: 1 },
+    {day: 21, name: 'The Big Fish', winner: 1, bonus: 1 },
+    {day: 22, name: 'Wild Tales', winner: 8 },
+    {day: 23, name: 'The Intouchables', winner: 2, bonus: 1 },
 ];
 
 const scoreObj = calendar.reduce((cur, luke) => {
@@ -72,6 +72,9 @@ const scores = Object.keys(scoreObj).map(key => {
     return a.points < b.points ? 1 : -1;
 });
 
+const BACK_KEYS = [33, /* pg up */, 37/* arrow left *//* 38 arrow up */];
+const NEXT_KEYS = [32/* space */, 34/* pgdn */, 39/* arrow right *//*, 40 arrow down */];
+
 export default class App extends PureComponent {
     constructor() {
         super();
@@ -82,26 +85,60 @@ export default class App extends PureComponent {
     }
 
     componentDidMount() {
-        setInterval(() => {
-            if (this.state.showLeaderboard) {
+        window.addEventListener('keydown', e => this.handleKeyDown(e));
+    }
+
+    handleKeyDown(e) {
+        const keyCode = e.keyCode || e.detail.keyCode;
+
+        if (BACK_KEYS.indexOf(keyCode) !== -1) {
+            this.back();
+        } else if (NEXT_KEYS.indexOf(keyCode) !== -1) {
+            this.next();
+        }
+
+    }
+
+    back() {
+        if (this.state.showLeaderboard) {
+            this.setState({
+                showLeaderboard: false,
+                showLukeNumber: calendar.length - 1
+            });
+        } else {
+            if (this.state.showLukeNumber === 0) {
                 this.setState({
-                    showLeaderboard: false,
-                    showLukeNumber: 0
+                    showLeaderboard: true,
+                    showLukeNumber: -1
                 });
             } else {
-                if (this.state.showLukeNumber === (calendar.length - 1)) {
-                    this.setState({
-                        showLeaderboard: true,
-                        showLukeNumber: -1
-                    });
-                } else {
-                    this.setState({
-                        showLeaderboard: false,
-                        showLukeNumber: this.state.showLukeNumber + 1
-                    });
-                }
+                this.setState({
+                    showLeaderboard: false,
+                    showLukeNumber: this.state.showLukeNumber - 1
+                });
             }
-        }, 2000)
+        }
+    }
+
+    next() {
+        if (this.state.showLeaderboard) {
+            this.setState({
+                showLeaderboard: false,
+                showLukeNumber: 0
+            });
+        } else {
+            if (this.state.showLukeNumber === (calendar.length - 1)) {
+                this.setState({
+                    showLeaderboard: true,
+                    showLukeNumber: -1
+                });
+            } else {
+                this.setState({
+                    showLeaderboard: false,
+                    showLukeNumber: this.state.showLukeNumber + 1
+                });
+            }
+        }
     }
 
     getLukeData(num) {
@@ -121,7 +158,7 @@ export default class App extends PureComponent {
         }
 
         return {
-            day: num + 1,
+            day: luke.day,
             extra,
             winner,
             bonus,
@@ -144,8 +181,16 @@ export default class App extends PureComponent {
             <div>
                 <div id="wrapper">
                     <h1>{this.renderHeader()}</h1>
-                    {this.state.showLeaderboard && <Leaderboard scores={scores}/>}
-                    {this.state.showLukeNumber > -1 && <Luke lukeData={this.getLukeData(this.state.showLukeNumber)}/>}
+                    <div className="grid">
+                        <div className="arrow-left" onClick={this.back.bind(this)}></div>
+
+                        <div className="middle">
+                            {this.state.showLeaderboard && <Leaderboard scores={scores}/>}
+                            {this.state.showLukeNumber > -1 && <Luke lukeData={this.getLukeData(this.state.showLukeNumber)}/>}
+                        </div>
+
+                        <div className="arrow-right" onClick={this.next.bind(this)}></div>
+                    </div>
                 </div>
             </div>
         )
