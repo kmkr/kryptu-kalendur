@@ -22030,14 +22030,18 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var users = [{ id: 1, name: 'M. Worren' }, { id: 2, name: 'D00n' }, { id: 3, name: 'T. Virik' }, { id: 4, name: 'DJ MIkky' }, { id: 5, name: 'A. Stokke' }, { id: 6, name: 'B0Do' }, { id: 7, name: 'H. Stokke' }];
+	var users = [{ id: 1, name: 'M. Worren' }, { id: 2, name: 'Dune' }, { id: 3, name: 'T. Virik' }, { id: 4, name: 'DJ MIkky' }, { id: 5, name: 'A. Stokke' }, { id: 6, name: 'B0Do' }, { id: 7, name: 'H. Stokke' }, { id: 8, name: 'H0mo' }, { id: 9, name: 'Second Father' }, { id: 10, name: 'Matty' }, { id: 11, name: 'Guddi' }, { id: 12, name: 'Roondi' }];
 	
-	var calendar = [{ name: 'Spirited Away', winner: 1, bonus: 1 }, { name: 'Jurassic Park (AKA Jurussika Park)', winner: 2, bonus: 2 }, { name: 'Moon', winner: 3 }, { name: 'Moonrise Kingdom', winner: 1 }, { name: 'Fantastic Planet', winner: 5 }, { name: 'Napoleon Dynamite', winner: 4, bonus: 6 }, { name: 'Kung Fu Hustle', winner: 7, bonus: 7 }, { name: 'Under The Skin', winner: 5 }, { name: '2001 A Space Odyssey', winner: 5, bonus: 5 }, { name: 'Snatch', winner: 3, bonus: 3 }];
+	var calendar = [{ name: 'Spirited Away', winner: 1, bonus: 1 }, { name: 'Jurassic Park (AKA Jurussika Park)', winner: 2, bonus: 2 }, { name: 'Moon', winner: 3 }, { name: 'Moonrise Kingdom', winner: 1 }, { name: 'Fantastic Planet', winner: 5, extra: { id: 4, points: 0.5 } }, { name: 'Napoleon Dynamite', winner: 4, bonus: 6 }, { name: 'Kung Fu Hustle', winner: 7, bonus: 7 }, { name: 'Under The Skin', winner: 5 }, { name: '2001 A Space Odyssey', winner: 5, bonus: 5 }, { name: 'Snatch', winner: 3, bonus: 3 }, { name: 'Delicatessen', winner: 1 }, { name: 'Star Wars Ep 4', winner: 8, bonus: 9, extra: { id: 10, points: 0.25 } }, { name: 'Nausicaã', winner: 1, bonus: 1, extra: { id: 5, points: 1 } }, { name: 'Alien', winner: 1, bonus: 5 }, { name: 'It Follows', winner: 5 }, { name: 'Blade Runner', winner: 5, bonus: 5, extra: { id: 7, points: 1 } }, { name: 'The Red Turtle', winner: 11 }, { name: 'Pulp Fiction', winner: 5 }, { name: 'The Iron Giant', winner: 5 }, { name: 'The Meaning of Life', winner: 6, extra: { id: 12, points: 0.75 } }, { name: 'Corpse Bride', winner: 1 }, { name: 'The Big Fish', winner: 1, bonus: 1 }, { name: 'Wild Tales', winner: 8 }, { name: 'The Intouchables', winner: 2, bonus: 1 }];
 	
 	var scoreObj = calendar.reduce(function (cur, luke) {
 	    cur[luke.winner] = (cur[luke.winner] || 0) + 1;
 	    if (luke.bonus) {
 	        cur[luke.bonus] = (cur[luke.bonus] || 0) + 0.5;
+	    }
+	
+	    if (luke.extra) {
+	        cur[luke.extra.id] = (cur[luke.extra.id] || 0) + luke.extra.points;
 	    }
 	
 	    return cur;
@@ -22097,7 +22101,7 @@
 	                        });
 	                    }
 	                }
-	            }, 12000);
+	            }, 2000);
 	        }
 	    }, {
 	        key: 'getLukeData',
@@ -22113,8 +22117,19 @@
 	                }).name;
 	            }
 	
+	            var extra = {};
+	            if (luke.extra) {
+	                extra = {
+	                    name: users.find(function (u) {
+	                        return u.id === luke.extra.id;
+	                    }).name,
+	                    points: luke.extra.points
+	                };
+	            }
+	
 	            return {
 	                day: num + 1,
+	                extra: extra,
 	                winner: winner,
 	                bonus: bonus,
 	                name: luke.name
@@ -22273,6 +22288,7 @@
 	            var _props$lukeData = this.props.lukeData,
 	                name = _props$lukeData.name,
 	                day = _props$lukeData.day,
+	                extra = _props$lukeData.extra,
 	                winner = _props$lukeData.winner,
 	                bonus = _props$lukeData.bonus;
 	
@@ -22312,6 +22328,21 @@
 	                            null,
 	                            bonus
 	                        )
+	                    ),
+	                    extra.name && _react2.default.createElement(
+	                        'span',
+	                        null,
+	                        '\xA0\xA0\xA0',
+	                        _react2.default.createElement('img', { className: 'icon', src: 'imgs/carrot_bonus.png' }),
+	                        ' ',
+	                        _react2.default.createElement(
+	                            'strong',
+	                            null,
+	                            extra.name
+	                        ),
+	                        '(+',
+	                        extra.points,
+	                        ')'
 	                    )
 	                )
 	            );

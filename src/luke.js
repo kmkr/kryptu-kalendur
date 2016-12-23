@@ -3,7 +3,7 @@ import leftPad from 'left-pad';
 
 export default class Luke extends PureComponent {
     render() {
-        const {name, day, winner, bonus} = this.props.lukeData;
+        const {name, day, extra, winner, bonus} = this.props.lukeData;
         return (
             <div id="luke">
                 <h2>#{day}</h2>
@@ -15,6 +15,7 @@ export default class Luke extends PureComponent {
                 <p>
                     <img className="icon" src="imgs/super_mushroom.png" /> <strong>{winner}</strong>
                     {bonus && <span>&nbsp;&nbsp;&nbsp;<img className="icon" src="imgs/cherry_bonus.png" /> <strong>{bonus}</strong></span>}
+                    {extra.name && <span>&nbsp;&nbsp;&nbsp;<img className="icon" src="imgs/carrot_bonus.png" /> <strong>{extra.name}</strong>(+{extra.points})</span>}
                 </p>
 
             </div>
