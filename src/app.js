@@ -179,7 +179,7 @@ export default class App extends PureComponent {
         const width = window.innerWidth;
         const height = window.innerHeight;
         return (
-            <Swipable onSwipedRight={this.next.bind(this)} onSwipedLeft={this.back.bind(this)}>
+            <Swipable onSwipedRight={this.back.bind(this)} onSwipedLeft={this.next.bind(this)}>
                 <div id="wrapper">
                     <h1>{this.renderHeader()}</h1>
                     <div className="grid">
