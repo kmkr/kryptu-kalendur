@@ -5,8 +5,6 @@ export default class Leaderboard extends PureComponent {
     render() {
         return (
             <div id="leaderboard">
-                <h2>Leaderboard</h2>
-
                 <ul>
                     {this.props.scores.map((score, index) => (
                         <li key={score.name} className={`leader-${index + 1}`}>

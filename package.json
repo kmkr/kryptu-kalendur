@@ -24,5 +24,8 @@
     "react-snowfetti": "^1.2.3",
     "style-loader": "^0.13.1",
     "webpack": "^1.14.0"
+  },
+  "dependencies": {
+    "react-swipeable": "^3.7.0"
   }
 }

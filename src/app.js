@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 
 import Leaderboard from './leaderboard';
 import Luke from './luke';
+import Swipable from 'react-swipeable';
 import './app.less';
 
 const users = [
@@ -178,7 +179,7 @@ export default class App extends PureComponent {
         const width = window.innerWidth;
         const height = window.innerHeight;
         return (
-            <div>
+            <Swipable onSwipingRight={this.next.bind(this)} onSwipingLeft={this.back.bind(this)}>
                 <div id="wrapper">
                     <h1>{this.renderHeader()}</h1>
                     <div className="grid">
@@ -192,7 +193,7 @@ export default class App extends PureComponent {
                         <div className="arrow-right" onClick={this.next.bind(this)}></div>
                     </div>
                 </div>
-            </div>
+            </Swipable>
         )
     }
 }
