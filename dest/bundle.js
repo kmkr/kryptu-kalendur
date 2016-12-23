@@ -22200,7 +22200,7 @@
 	            var height = window.innerHeight;
 	            return _react2.default.createElement(
 	                _reactSwipeable2.default,
-	                { onSwipingRight: this.next.bind(this), onSwipingLeft: this.back.bind(this) },
+	                { onSwipedRight: this.next.bind(this), onSwipedLeft: this.back.bind(this) },
 	                _react2.default.createElement(
 	                    'div',
 	                    { id: 'wrapper' },
