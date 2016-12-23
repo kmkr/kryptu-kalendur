@@ -22329,10 +22329,31 @@
 	    function Luke() {
 	        _classCallCheck(this, Luke);
 	
-	        return _possibleConstructorReturn(this, (Luke.__proto__ || Object.getPrototypeOf(Luke)).apply(this, arguments));
+	        var _this = _possibleConstructorReturn(this, (Luke.__proto__ || Object.getPrototypeOf(Luke)).call(this));
+	
+	        _this.state = {
+	            loaded: false
+	        };
+	        return _this;
 	    }
 	
 	    _createClass(Luke, [{
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            if (nextProps.lukeData !== this.props.lukeData) {
+	                this.setState({
+	                    loaded: false
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'show',
+	        value: function show() {
+	            this.setState({
+	                loaded: true
+	            });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var _props$lukeData = this.props.lukeData,
@@ -22351,7 +22372,8 @@
 	                    '#',
 	                    day
 	                ),
-	                _react2.default.createElement('img', { className: 'gif', src: 'dest/imgs/' + (0, _leftPad2.default)(day, 2, '0') + '.gif' }),
+	                !this.state.loaded && _react2.default.createElement('img', { className: 'gif', src: 'dest/imgs/loading.svg' }),
+	                _react2.default.createElement('img', { style: { display: this.state.loaded ? 'inline-block' : 'none' }, onLoad: this.show.bind(this), className: 'gif', src: 'dest/imgs/' + (0, _leftPad2.default)(day, 2, '0') + '.gif' }),
 	                _react2.default.createElement(
 	                    'h3',
 	                    null,

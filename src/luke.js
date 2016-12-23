@@ -2,13 +2,34 @@ import React, { PureComponent } from 'react';
 import leftPad from 'left-pad';
 
 export default class Luke extends PureComponent {
+    constructor() {
+        super();
+        this.state = {
+            loaded: false
+        };
+    }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.lukeData !== this.props.lukeData) {
+            this.setState({
+                loaded: false
+            });
+        }
+    }
+
+    show() {
+        this.setState({
+            loaded: true
+        });
+    }
     render() {
         const {name, day, extra, winner, bonus} = this.props.lukeData;
         return (
             <div id="luke">
                 <h2>#{day}</h2>
 
-                <img className="gif" src={`dest/imgs/${leftPad(day, 2, '0')}.gif`}/>
+                {!this.state.loaded && <img className="gif" src="dest/imgs/loading.svg"/>}
+
+                <img style={{display: this.state.loaded ? 'inline-block' : 'none'}} onLoad={this.show.bind(this)} className="gif" src={`dest/imgs/${leftPad(day, 2, '0')}.gif`}/>
 
                 <h3>{name}</h3>
 
