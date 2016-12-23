@@ -22351,7 +22351,7 @@
 	                    '#',
 	                    day
 	                ),
-	                _react2.default.createElement('img', { className: 'gif', src: 'imgs/' + (0, _leftPad2.default)(day, 2, '0') + '.gif' }),
+	                _react2.default.createElement('img', { className: 'gif', src: 'dest/imgs/' + (0, _leftPad2.default)(day, 2, '0') + '.gif' }),
 	                _react2.default.createElement(
 	                    'h3',
 	                    null,
@@ -22360,7 +22360,7 @@
 	                _react2.default.createElement(
 	                    'p',
 	                    null,
-	                    _react2.default.createElement('img', { className: 'icon', src: 'imgs/super_mushroom.png' }),
+	                    _react2.default.createElement('img', { className: 'icon', src: 'dest/imgs/super_mushroom.png' }),
 	                    ' ',
 	                    _react2.default.createElement(
 	                        'strong',
@@ -22371,7 +22371,7 @@
 	                        'span',
 	                        null,
 	                        '\xA0\xA0\xA0',
-	                        _react2.default.createElement('img', { className: 'icon', src: 'imgs/cherry_bonus.png' }),
+	                        _react2.default.createElement('img', { className: 'icon', src: 'dest/imgs/cherry_bonus.png' }),
 	                        ' ',
 	                        _react2.default.createElement(
 	                            'strong',
@@ -22383,7 +22383,7 @@
 	                        'span',
 	                        null,
 	                        '\xA0\xA0\xA0',
-	                        _react2.default.createElement('img', { className: 'icon', src: 'imgs/carrot_bonus.png' }),
+	                        _react2.default.createElement('img', { className: 'icon', src: 'dest/imgs/carrot_bonus.png' }),
 	                        ' ',
 	                        _react2.default.createElement(
 	                            'strong',
