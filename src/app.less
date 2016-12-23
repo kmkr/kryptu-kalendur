@@ -65,8 +65,10 @@ body {
 }
 
 .grid {
-    display: flex;
-    justify-content: center;
+    @media (min-width: 480px) {
+        display: flex;
+        justify-content: center;
+    }
 }
 
 #app {
@@ -117,6 +119,6 @@ body {
     }
     img.gif {
         min-width: 400px;
-        min-height: 400px;
+        max-width: 100%;
     }
 }
