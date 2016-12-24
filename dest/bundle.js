@@ -22372,62 +22372,69 @@
 	                    '#',
 	                    day
 	                ),
-	                !this.state.loaded && _react2.default.createElement('img', { className: 'gif', src: 'dest/imgs/loading.svg' }),
 	                _react2.default.createElement('img', { style: { display: this.state.loaded ? 'inline-block' : 'none' }, onLoad: this.show.bind(this), className: 'gif', src: 'dest/imgs/' + (0, _leftPad2.default)(day, 2, '0') + '.gif' }),
-	                _react2.default.createElement(
-	                    'h3',
-	                    null,
-	                    name
-	                ),
-	                _react2.default.createElement(
-	                    'p',
+	                this.state.loaded ? _react2.default.createElement(
+	                    'div',
 	                    null,
 	                    _react2.default.createElement(
-	                        'div',
-	                        { style: { display: 'inline-block' } },
-	                        _react2.default.createElement('img', { className: 'icon', src: 'dest/imgs/super_mushroom.png' }),
-	                        ' ',
-	                        _react2.default.createElement(
-	                            'strong',
-	                            null,
-	                            winner
-	                        )
+	                        'h3',
+	                        null,
+	                        name
 	                    ),
 	                    _react2.default.createElement(
-	                        'div',
-	                        { style: { display: 'inline-block' } },
-	                        bonus && _react2.default.createElement(
-	                            'span',
-	                            null,
-	                            '\xA0\xA0\xA0',
-	                            _react2.default.createElement('img', { className: 'icon', src: 'dest/imgs/cherry_bonus.png' }),
+	                        'p',
+	                        null,
+	                        _react2.default.createElement(
+	                            'div',
+	                            { style: { display: 'inline-block' } },
+	                            _react2.default.createElement('img', { className: 'icon', src: 'dest/imgs/super_mushroom.png' }),
 	                            ' ',
 	                            _react2.default.createElement(
 	                                'strong',
 	                                null,
-	                                bonus
+	                                winner
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { style: { display: 'inline-block' } },
+	                            bonus && _react2.default.createElement(
+	                                'span',
+	                                null,
+	                                '\xA0\xA0\xA0',
+	                                _react2.default.createElement('img', { className: 'icon', src: 'dest/imgs/cherry_bonus.png' }),
+	                                ' ',
+	                                _react2.default.createElement(
+	                                    'strong',
+	                                    null,
+	                                    bonus
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { style: { display: 'inline-block' } },
+	                            extra.name && _react2.default.createElement(
+	                                'span',
+	                                null,
+	                                '\xA0\xA0\xA0',
+	                                _react2.default.createElement('img', { className: 'icon', src: 'dest/imgs/carrot_bonus.png' }),
+	                                ' ',
+	                                _react2.default.createElement(
+	                                    'strong',
+	                                    null,
+	                                    extra.name
+	                                ),
+	                                '(+',
+	                                extra.points,
+	                                ')'
 	                            )
 	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { style: { display: 'inline-block' } },
-	                        extra.name && _react2.default.createElement(
-	                            'span',
-	                            null,
-	                            '\xA0\xA0\xA0',
-	                            _react2.default.createElement('img', { className: 'icon', src: 'dest/imgs/carrot_bonus.png' }),
-	                            ' ',
-	                            _react2.default.createElement(
-	                                'strong',
-	                                null,
-	                                extra.name
-	                            ),
-	                            '(+',
-	                            extra.points,
-	                            ')'
-	                        )
 	                    )
+	                ) : _react2.default.createElement(
+	                    'div',
+	                    { style: { position: 'fixed', top: 0, bottom: 0, left: 0, right: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' } },
+	                    _react2.default.createElement('img', { className: 'loading', src: 'dest/imgs/loading.svg' })
 	                )
 	            );
 	        }
@@ -22744,7 +22751,7 @@
 	
 	
 	// module
-	exports.push([module.id, "html,\nbody {\n  max-width: 100%;\n  overflow-x: hidden;\n  overflow-y: scroll;\n}\nbody {\n  background-color: #0a2933;\n  color: ghostwhite;\n  font-family: 'Raleway';\n}\n@media (min-width: 480px) {\n  body {\n    font-size: 1.8em;\n  }\n}\n.arrow-right,\n.arrow-left {\n  width: 0;\n  height: 0;\n  border-top: 55px solid transparent;\n  border-bottom: 55px solid transparent;\n  cursor: pointer;\n  position: fixed;\n  top: 45%;\n  transition: all 0.1s ease-in-out;\n}\n@media (max-width: 480px) {\n  .arrow-right,\n  .arrow-left {\n    border-top: 35px solid transparent;\n    border-bottom: 35px solid transparent;\n  }\n}\n.arrow-right {\n  border-left: 55px solid indianred;\n  right: 2%;\n}\n@media (max-width: 480px) {\n  .arrow-right {\n    border-left: 35px solid indianred;\n  }\n}\n.arrow-left:hover,\n.arrow-right:hover {\n  transform: scale(1.1);\n}\n.arrow-left {\n  border-right: 55px solid indianred;\n  left: 2%;\n}\n@media (max-width: 480px) {\n  .arrow-left {\n    border-right: 35px solid indianred;\n  }\n}\n#wrapper {\n  margin-top: 5px;\n  position: relative;\n  z-index: 10000;\n}\n@media (min-width: 480px) {\n  .grid {\n    display: flex;\n    justify-content: center;\n  }\n}\n#app {\n  margin: 0 auto;\n  text-align: center;\n}\n#app h1 span {\n  font-family: 'Bungee';\n}\n#leaderboard ul {\n  display: inline-block;\n  margin-left: 0;\n  padding-left: 0;\n}\n#leaderboard li {\n  text-align: left;\n  list-style-type: none;\n  margin-bottom: 15px;\n}\n#leaderboard .leader-1 {\n  font-size: 2em;\n}\n#leaderboard .leader-2 {\n  font-size: 1.8em;\n}\n#leaderboard .leader-3 {\n  font-size: 1.6em;\n}\n#leaderboard .leader-4 {\n  font-size: 1.4em;\n}\n#leaderboard .leader-4 {\n  font-size: 1.2em;\n}\n#luke img.icon {\n  width: 50px;\n  height: 50px;\n}\n#luke img.gif {\n  min-width: 400px;\n  max-width: 100%;\n}\n", ""]);
+	exports.push([module.id, "html,\nbody {\n  max-width: 100%;\n  overflow-x: hidden;\n  overflow-y: scroll;\n}\nbody {\n  background-color: #0a2933;\n  color: ghostwhite;\n  font-family: 'Raleway';\n}\n@media (min-width: 480px) {\n  body {\n    font-size: 1.8em;\n  }\n}\n.arrow-right,\n.arrow-left {\n  width: 0;\n  height: 0;\n  border-top: 55px solid transparent;\n  border-bottom: 55px solid transparent;\n  cursor: pointer;\n  position: fixed;\n  top: 45%;\n  transition: all 0.1s ease-in-out;\n}\n@media (max-width: 480px) {\n  .arrow-right,\n  .arrow-left {\n    border-top: 35px solid transparent;\n    border-bottom: 35px solid transparent;\n  }\n}\n.arrow-right {\n  border-left: 55px solid indianred;\n  right: 2%;\n}\n@media (max-width: 480px) {\n  .arrow-right {\n    border-left: 35px solid indianred;\n  }\n}\n.arrow-left:hover,\n.arrow-right:hover {\n  transform: scale(1.1);\n}\n.arrow-left {\n  border-right: 55px solid indianred;\n  left: 2%;\n}\n@media (max-width: 480px) {\n  .arrow-left {\n    border-right: 35px solid indianred;\n  }\n}\n#wrapper {\n  margin-top: 5px;\n  position: relative;\n  z-index: 10000;\n}\n@media (min-width: 480px) {\n  .grid {\n    display: flex;\n    justify-content: center;\n  }\n}\n#app {\n  margin: 0 auto;\n  text-align: center;\n}\n#app h1 span {\n  font-family: 'Bungee';\n}\n#leaderboard ul {\n  display: inline-block;\n  margin-left: 0;\n  padding-left: 0;\n}\n#leaderboard li {\n  text-align: left;\n  list-style-type: none;\n  margin-bottom: 15px;\n}\n#leaderboard .leader-1 {\n  font-size: 2em;\n}\n#leaderboard .leader-2 {\n  font-size: 1.8em;\n}\n#leaderboard .leader-3 {\n  font-size: 1.6em;\n}\n#leaderboard .leader-4 {\n  font-size: 1.4em;\n}\n#leaderboard .leader-4 {\n  font-size: 1.2em;\n}\n#luke img.icon {\n  width: 50px;\n  height: 50px;\n}\n#luke img.gif {\n  min-width: 400px;\n  max-width: 100%;\n}\n#luke img.loading {\n  width: 20%;\n  height: 20%;\n}\n", ""]);
 	
 	// exports
 
