@@ -159,6 +159,7 @@ export default class App extends PureComponent {
         }
 
         return {
+            index: num,
             day: luke.day,
             extra,
             winner,

@@ -22,12 +22,12 @@ export default class Luke extends PureComponent {
         });
     }
     render() {
-        const {name, day, extra, winner, bonus} = this.props.lukeData;
+        const {name, index, day, extra, winner, bonus} = this.props.lukeData;
         return (
             <div id="luke">
                 <h2>#{day}</h2>
 
-                <img style={{display: this.state.loaded ? 'inline-block' : 'none'}} onLoad={this.show.bind(this)} className="gif" src={`dest/imgs/${leftPad(day, 2, '0')}.gif`}/>
+                <img style={{display: this.state.loaded ? 'inline-block' : 'none'}} onLoad={this.show.bind(this)} className="gif" src={`dest/imgs/${leftPad(index + 1, 2, '0')}.gif`}/>
                 {this.state.loaded ? (
                     <div>
                         <h3>{name}</h3>

@@ -22173,6 +22173,7 @@
 	            }
 	
 	            return {
+	                index: num,
 	                day: luke.day,
 	                extra: extra,
 	                winner: winner,
@@ -22358,6 +22359,7 @@
 	        value: function render() {
 	            var _props$lukeData = this.props.lukeData,
 	                name = _props$lukeData.name,
+	                index = _props$lukeData.index,
 	                day = _props$lukeData.day,
 	                extra = _props$lukeData.extra,
 	                winner = _props$lukeData.winner,
@@ -22372,7 +22374,7 @@
 	                    '#',
 	                    day
 	                ),
-	                _react2.default.createElement('img', { style: { display: this.state.loaded ? 'inline-block' : 'none' }, onLoad: this.show.bind(this), className: 'gif', src: 'dest/imgs/' + (0, _leftPad2.default)(day, 2, '0') + '.gif' }),
+	                _react2.default.createElement('img', { style: { display: this.state.loaded ? 'inline-block' : 'none' }, onLoad: this.show.bind(this), className: 'gif', src: 'dest/imgs/' + (0, _leftPad2.default)(index + 1, 2, '0') + '.gif' }),
 	                this.state.loaded ? _react2.default.createElement(
 	                    'div',
 	                    null,
