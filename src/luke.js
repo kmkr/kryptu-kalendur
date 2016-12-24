@@ -31,8 +31,7 @@ export default class Luke extends PureComponent {
                 {this.state.loaded ? (
                     <div>
                         <h3>{name}</h3>
-
-                        <p>
+                        <div>
                             <div style={{display: 'inline-block'}}>
                                 <img className="icon" src="dest/imgs/super_mushroom.png" /> <strong>{winner}</strong>
                             </div>
@@ -42,7 +41,7 @@ export default class Luke extends PureComponent {
                             <div style={{display: 'inline-block'}}>
                                 {extra.name && <span>&nbsp;&nbsp;&nbsp;<img className="icon" src="dest/imgs/carrot_bonus.png" /> <strong>{extra.name}</strong>(+{extra.points})</span>}
                             </div>
-                        </p>
+                        </div>
                     </div>
                 ) : (
                     <div style={{position: 'fixed', top: 0, bottom: 0, left: 0, right: 0, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
