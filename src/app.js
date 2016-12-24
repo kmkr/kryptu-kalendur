@@ -185,7 +185,7 @@ export default class App extends PureComponent {
                     <div className="grid">
                         <div className="arrow-left" onClick={this.back.bind(this)}></div>
 
-                        <div className="middle">
+                        <div className="middle" onClick={this.next.bind(this)}>
                             {this.state.showLeaderboard && <Leaderboard scores={scores}/>}
                             {this.state.showLukeNumber > -1 && <Luke lukeData={this.getLukeData(this.state.showLukeNumber)}/>}
                         </div>

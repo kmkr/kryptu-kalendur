@@ -22215,7 +22215,7 @@
 	                        _react2.default.createElement('div', { className: 'arrow-left', onClick: this.back.bind(this) }),
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: 'middle' },
+	                            { className: 'middle', onClick: this.next.bind(this) },
 	                            this.state.showLeaderboard && _react2.default.createElement(_leaderboard2.default, { scores: scores }),
 	                            this.state.showLukeNumber > -1 && _react2.default.createElement(_luke2.default, { lukeData: this.getLukeData(this.state.showLukeNumber) })
 	                        ),
