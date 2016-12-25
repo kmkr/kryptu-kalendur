@@ -33,7 +33,7 @@ export default class Luke extends PureComponent {
                         <h3>{name}</h3>
                         <div>
                             <div style={{display: 'inline-block'}}>
-                                <img className="icon" src="dest/imgs/super_mushroom.png" /> <strong>{winner}</strong>
+                                {winner && <span><img className="icon" src="dest/imgs/super_mushroom.png" /> <strong>{winner}</strong></span>}
                             </div>
                             <div style={{display: 'inline-block'}}>
                                 {bonus && <span>&nbsp;&nbsp;&nbsp;<img className="icon" src="dest/imgs/cherry_bonus.png" /> <strong>{bonus}</strong></span>}

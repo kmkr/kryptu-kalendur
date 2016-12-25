@@ -45,10 +45,17 @@ const calendar = [
     {day: 21, name: 'The Big Fish', winner: 1, bonus: 1 },
     {day: 22, name: 'Wild Tales', winner: 8 },
     {day: 23, name: 'The Intouchables', winner: 2, bonus: 1 },
+    {day: 24, name: 'The Orphanage', winner: 1 },
+    {day: 24, name: 'Pan\'s Labyrinth', winner: 5 },
+    {day: 24, name: 'The Big Lebowski', winner: 1, bonus: 1 },
+    {day: 24, name: 'Apocalypse Now', winner: 5, bonus: 5 },
+    {day: 24, name: 'The Old Man and the Sea', extra: { id: 1, points: 5 }},
 ];
 
 const scoreObj = calendar.reduce((cur, luke) => {
-    cur[luke.winner] = (cur[luke.winner] || 0) + 1;
+    if (luke.winner) {
+        cur[luke.winner] = (cur[luke.winner] || 0) + 1;
+    }
     if (luke.bonus) {
         cur[luke.bonus] = (cur[luke.bonus] || 0) + 0.5;
     }
@@ -144,7 +151,10 @@ export default class App extends PureComponent {
 
     getLukeData(num) {
         const luke = calendar[num];
-        const winner = users.find(u => u.id === luke.winner).name;
+        let winner;
+        if (luke.winner) {
+            winner = users.find(u => u.id === luke.winner).name;
+        }
         let bonus;
         if (luke.bonus) {
             bonus = users.find(u => u.id === luke.bonus).name;

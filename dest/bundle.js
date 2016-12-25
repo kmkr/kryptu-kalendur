@@ -22036,10 +22036,12 @@
 	
 	var users = [{ id: 1, name: 'M. Worren' }, { id: 2, name: 'Dune' }, { id: 3, name: 'T. Virik' }, { id: 4, name: 'DJ MIkky' }, { id: 5, name: 'A. Stokke' }, { id: 6, name: 'B0Do' }, { id: 7, name: 'H. Stokke' }, { id: 8, name: 'H0mo' }, { id: 9, name: 'Second Father' }, { id: 10, name: 'Matty' }, { id: 11, name: 'Guddi' }, { id: 12, name: 'Roondi' }];
 	
-	var calendar = [{ day: 1, name: 'Spirited Away', winner: 1, bonus: 1 }, { day: 2, name: 'Jurassic Park (AKA Jurussika Park)', winner: 2, bonus: 2 }, { day: 3, name: 'Moon', winner: 3 }, { day: 4, name: 'Moonrise Kingdom', winner: 1 }, { day: 5, name: 'Fantastic Planet', winner: 5, extra: { id: 4, points: 0.5 } }, { day: 6, name: 'Napoleon Dynamite', winner: 4, bonus: 6 }, { day: 7, name: 'Kung Fu Hustle', winner: 7, bonus: 7 }, { day: 8, name: 'Under The Skin', winner: 5 }, { day: 9, name: '2001 A Space Odyssey', winner: 5, bonus: 5 }, { day: 10, name: 'Snatch', winner: 3, bonus: 3 }, { day: 11, name: 'Delicatessen', winner: 1 }, { day: 12, name: 'Star Wars Ep 4', winner: 8, bonus: 9, extra: { id: 10, points: 0.25 } }, { day: 13, name: 'Nausicaã', winner: 1, bonus: 1, extra: { id: 5, points: 1 } }, { day: 14, name: 'Alien', winner: 1, bonus: 5 }, { day: 15, name: 'It Follows', winner: 5 }, { day: 16, name: 'Blade Runner', winner: 5, bonus: 5, extra: { id: 7, points: 1 } }, { day: 17, name: 'The Red Turtle', winner: 11 }, { day: 18, name: 'Pulp Fiction', winner: 5 }, { day: 19, name: 'The Iron Giant', winner: 5 }, { day: 20, name: 'The Meaning of Life', winner: 6, extra: { id: 12, points: 0.75 } }, { day: 21, name: 'Corpse Bride', winner: 1 }, { day: 21, name: 'The Big Fish', winner: 1, bonus: 1 }, { day: 22, name: 'Wild Tales', winner: 8 }, { day: 23, name: 'The Intouchables', winner: 2, bonus: 1 }];
+	var calendar = [{ day: 1, name: 'Spirited Away', winner: 1, bonus: 1 }, { day: 2, name: 'Jurassic Park (AKA Jurussika Park)', winner: 2, bonus: 2 }, { day: 3, name: 'Moon', winner: 3 }, { day: 4, name: 'Moonrise Kingdom', winner: 1 }, { day: 5, name: 'Fantastic Planet', winner: 5, extra: { id: 4, points: 0.5 } }, { day: 6, name: 'Napoleon Dynamite', winner: 4, bonus: 6 }, { day: 7, name: 'Kung Fu Hustle', winner: 7, bonus: 7 }, { day: 8, name: 'Under The Skin', winner: 5 }, { day: 9, name: '2001 A Space Odyssey', winner: 5, bonus: 5 }, { day: 10, name: 'Snatch', winner: 3, bonus: 3 }, { day: 11, name: 'Delicatessen', winner: 1 }, { day: 12, name: 'Star Wars Ep 4', winner: 8, bonus: 9, extra: { id: 10, points: 0.25 } }, { day: 13, name: 'Nausicaã', winner: 1, bonus: 1, extra: { id: 5, points: 1 } }, { day: 14, name: 'Alien', winner: 1, bonus: 5 }, { day: 15, name: 'It Follows', winner: 5 }, { day: 16, name: 'Blade Runner', winner: 5, bonus: 5, extra: { id: 7, points: 1 } }, { day: 17, name: 'The Red Turtle', winner: 11 }, { day: 18, name: 'Pulp Fiction', winner: 5 }, { day: 19, name: 'The Iron Giant', winner: 5 }, { day: 20, name: 'The Meaning of Life', winner: 6, extra: { id: 12, points: 0.75 } }, { day: 21, name: 'Corpse Bride', winner: 1 }, { day: 21, name: 'The Big Fish', winner: 1, bonus: 1 }, { day: 22, name: 'Wild Tales', winner: 8 }, { day: 23, name: 'The Intouchables', winner: 2, bonus: 1 }, { day: 24, name: 'The Orphanage', winner: 1 }, { day: 24, name: 'Pan\'s Labyrinth', winner: 5 }, { day: 24, name: 'The Big Lebowski', winner: 1, bonus: 1 }, { day: 24, name: 'Apocalypse Now', winner: 5, bonus: 5 }, { day: 24, name: 'The Old Man and the Sea', extra: { id: 1, points: 5 } }];
 	
 	var scoreObj = calendar.reduce(function (cur, luke) {
-	    cur[luke.winner] = (cur[luke.winner] || 0) + 1;
+	    if (luke.winner) {
+	        cur[luke.winner] = (cur[luke.winner] || 0) + 1;
+	    }
 	    if (luke.bonus) {
 	        cur[luke.bonus] = (cur[luke.bonus] || 0) + 0.5;
 	    }
@@ -22152,9 +22154,12 @@
 	        key: 'getLukeData',
 	        value: function getLukeData(num) {
 	            var luke = calendar[num];
-	            var winner = users.find(function (u) {
-	                return u.id === luke.winner;
-	            }).name;
+	            var winner = void 0;
+	            if (luke.winner) {
+	                winner = users.find(function (u) {
+	                    return u.id === luke.winner;
+	                }).name;
+	            }
 	            var bonus = void 0;
 	            if (luke.bonus) {
 	                bonus = users.find(function (u) {
@@ -22389,12 +22394,16 @@
 	                        _react2.default.createElement(
 	                            'div',
 	                            { style: { display: 'inline-block' } },
-	                            _react2.default.createElement('img', { className: 'icon', src: 'dest/imgs/super_mushroom.png' }),
-	                            ' ',
-	                            _react2.default.createElement(
-	                                'strong',
+	                            winner && _react2.default.createElement(
+	                                'span',
 	                                null,
-	                                winner
+	                                _react2.default.createElement('img', { className: 'icon', src: 'dest/imgs/super_mushroom.png' }),
+	                                ' ',
+	                                _react2.default.createElement(
+	                                    'strong',
+	                                    null,
+	                                    winner
+	                                )
 	                            )
 	                        ),
 	                        _react2.default.createElement(
@@ -22753,7 +22762,7 @@
 	
 	
 	// module
-	exports.push([module.id, "html,\nbody {\n  max-width: 100%;\n  overflow-x: hidden;\n  overflow-y: scroll;\n}\nbody {\n  background-color: #0a2933;\n  color: ghostwhite;\n  font-family: 'Raleway';\n}\n@media (min-width: 1000px) {\n  body {\n    font-size: 1.8em;\n  }\n}\n.arrow-right,\n.arrow-left {\n  width: 0;\n  height: 0;\n  border-top: 55px solid transparent;\n  border-bottom: 55px solid transparent;\n  cursor: pointer;\n  position: fixed;\n  top: 45%;\n  transition: all 0.1s ease-in-out;\n}\n@media (max-width: 1000px) {\n  .arrow-right,\n  .arrow-left {\n    border-top: 35px solid transparent;\n    border-bottom: 35px solid transparent;\n  }\n}\n.arrow-right {\n  border-left: 55px solid indianred;\n  right: 2%;\n}\n@media (max-width: 1000px) {\n  .arrow-right {\n    border-left: 35px solid indianred;\n  }\n}\n.arrow-left:hover,\n.arrow-right:hover {\n  transform: scale(1.1);\n}\n.arrow-left {\n  border-right: 55px solid indianred;\n  left: 2%;\n}\n@media (max-width: 1000px) {\n  .arrow-left {\n    border-right: 35px solid indianred;\n  }\n}\n#wrapper {\n  margin-top: 5px;\n  position: relative;\n  z-index: 10000;\n}\n@media (min-width: 1000px) {\n  .grid {\n    display: flex;\n    justify-content: center;\n  }\n}\n#app {\n  margin: 0 auto;\n  text-align: center;\n}\n#app h1 span {\n  font-family: 'Bungee';\n}\n#leaderboard ul {\n  display: inline-block;\n  margin-left: 0;\n  padding-left: 0;\n}\n#leaderboard li {\n  text-align: left;\n  list-style-type: none;\n  margin-bottom: 15px;\n}\n#leaderboard .leader-1 {\n  font-size: 2em;\n}\n#leaderboard .leader-2 {\n  font-size: 1.8em;\n}\n#leaderboard .leader-3 {\n  font-size: 1.6em;\n}\n#leaderboard .leader-4 {\n  font-size: 1.4em;\n}\n#leaderboard .leader-4 {\n  font-size: 1.2em;\n}\n#luke img.icon {\n  width: 50px;\n  height: 50px;\n}\n#luke img.gif {\n  min-width: 400px;\n  max-width: 100%;\n}\n#luke img.loading {\n  width: 30%;\n  height: 30%;\n}\n", ""]);
+	exports.push([module.id, "html,\nbody {\n  max-width: 100%;\n  overflow-x: hidden;\n  overflow-y: scroll;\n}\nbody {\n  background-color: #0a2933;\n  color: ghostwhite;\n  font-family: 'Raleway';\n}\n@media (min-width: 1000px) {\n  body {\n    font-size: 1.8em;\n  }\n}\n.arrow-right,\n.arrow-left {\n  width: 0;\n  height: 0;\n  border-top: 55px solid transparent;\n  border-bottom: 55px solid transparent;\n  cursor: pointer;\n  position: fixed;\n  top: 45%;\n  transition: all 0.1s ease-in-out;\n}\n@media (max-width: 1000px) {\n  .arrow-right,\n  .arrow-left {\n    border-top: 35px solid transparent;\n    border-bottom: 35px solid transparent;\n  }\n}\n.arrow-right {\n  border-left: 55px solid indianred;\n  right: 2%;\n}\n@media (max-width: 1000px) {\n  .arrow-right {\n    border-left: 35px solid indianred;\n  }\n}\n.arrow-left:hover,\n.arrow-right:hover {\n  transform: scale(1.1);\n}\n.arrow-left {\n  border-right: 55px solid indianred;\n  left: 2%;\n}\n@media (max-width: 1000px) {\n  .arrow-left {\n    border-right: 35px solid indianred;\n  }\n}\n#wrapper {\n  margin-top: 5px;\n  position: relative;\n  z-index: 10000;\n}\n@media (min-width: 1000px) {\n  .grid {\n    display: flex;\n    justify-content: center;\n  }\n}\n#app {\n  margin: 0 auto;\n  text-align: center;\n}\n#app h1 span {\n  font-family: 'Bungee';\n}\n#leaderboard ul {\n  display: inline-block;\n  margin-left: 0;\n  padding-left: 0;\n}\n#leaderboard li {\n  text-align: left;\n  list-style-type: none;\n  margin-bottom: 15px;\n}\n#leaderboard .leader-1 {\n  font-size: 2em;\n  color: gold;\n}\n#leaderboard .leader-2 {\n  font-size: 1.8em;\n}\n#leaderboard .leader-3 {\n  font-size: 1.6em;\n}\n#leaderboard .leader-4 {\n  font-size: 1.4em;\n}\n#leaderboard .leader-4 {\n  font-size: 1.2em;\n}\n#luke img.icon {\n  width: 50px;\n  height: 50px;\n}\n#luke img.gif {\n  min-width: 400px;\n  max-width: 100%;\n}\n#luke img.loading {\n  width: 30%;\n  height: 30%;\n}\n", ""]);
 	
 	// exports
 
